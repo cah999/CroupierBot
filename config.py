@@ -1,0 +1,19 @@
+TOKEN = 'NzU1MDIzNTcwMzU4MzcwMzA1.X19Qfg.XVFpGANs1YSKh4LCrNQhX27fHVw'
+
+POST_ID = 765947593552298005
+
+ROLES = {
+    '❤️': 764732857926156308, # DOTA 2
+    '🧡': 764732928726532137, # CS GO
+    '💛': 764732179607453736, # Among Us
+    '💜': 764733602986065960, # Rocket League
+    '💚': 764732887005659157, # GTA V
+    '🤎': 764742579224051722, # Minecraft
+    '🤍': 764734209964769281, # Genshin Impact
+    '🖤': 764742481194778634, # Dark Souls
+    '💙': 764756169519661127  # SIgame
+}
+
+EXCROLES = ()
+
+MAX_ROLES_PER_USER = 4
