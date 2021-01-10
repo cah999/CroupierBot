@@ -73,8 +73,8 @@ class lb(commands.Cog):
         await ctx.message.delete()
         embed = discord.Embed(title = '👩‍🎤 Топ общительных сучек 👨‍🎤', color = 0x32aafd)
         counter = 0
-        self.cursor.execute("SELECT name, voice_minutes FROM users ORDER BY voice_minutes DESC LIMIT 10")
-        users = self.cursor.fetchone()
+        self.cursor.execute("SELECT name, voice_minutes FROM users ORDER BY voice_minutes DESC")
+        users = self.cursor.fetchall()
         print(users)
         for row in users:
             print(row)
