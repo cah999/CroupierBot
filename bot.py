@@ -9,7 +9,7 @@ DATABASE_URL = os.environ['DATABASE_URL']
 conn = psycopg2.connect(DATABASE_URL, sslmode = 'require')
 cursor = conn.cursor()
 client = commands.Bot(command_prefix="!", intents = discord.Intents(messages = True, guild_messages = True, members = True, guilds = True, reactions = True, voice_states = True, invites = True))
-client.remove_command('help')
+# client.remove_command('help')
 
 
 

@@ -682,9 +682,9 @@ class Economic(commands.Cog):
         self.cursor.execute("SELECT balance FROM users WHERE id = {}".format(ctx.author.id))
         bal = self.cursor.fetchone()[0]
         if lvl < 10:
-            await ctx.send(embed = discord.Embed(description = f'**{ctx.author.name}**, для доступа к ограблениям вам нужен **10 уровень**', color = discord.Color.red(), delete_after = 10))
+            await ctx.send(embed = discord.Embed(description = f'**{ctx.author.name}**, для доступа к ограблениям вам нужен **10 уровень**', color = discord.Color.red()), delete_after = 10)
         elif bal < 0:
-            await ctx.send(embed = discord.Embed(description = f'**{ctx.author.name}**, у вас отрицательный баланс!**', color = discord.Color.red(), delete_after = 10))
+            await ctx.send(embed = discord.Embed(description = f'**{ctx.author.name}**, у вас отрицательный баланс!**', color = discord.Color.red()), delete_after = 10)
 
         else:
             amount = random.randint(0, 5001)
