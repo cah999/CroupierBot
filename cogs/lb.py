@@ -25,6 +25,7 @@ class lb(commands.Cog):
         counter = 0
         self.cursor.execute("SELECT name, balance FROM users ORDER BY balance DESC LIMIT 10")
         users = self.cursor.fetchall()
+        print(users)
         for row in users:
             counter += 1
             if counter == 1:
@@ -73,7 +74,7 @@ class lb(commands.Cog):
         embed = discord.Embed(title = '👩‍🎤 Топ общительных сучек 👨‍🎤', color = 0x32aafd)
         counter = 0
         self.cursor.execute("SELECT name, voice_minutes FROM users ORDER BY voice_minutes DESC LIMIT 10")
-        users = self.cursor.fetchall()
+        users = self.cursor.fetchone()
         print(users)
         for row in users:
             print(row)
