@@ -48,7 +48,7 @@ class lb(commands.Cog):
         embed = discord.Embed(title = '🤴 Топ влиятельных сучек 👸', color = 0x32aafd)
         counter = 0
 
-        self.cursor.execute("SELECT name, lvl FROM users ORDER BY lvl DESC LIMIT 10")
+        self.cursor.execute("SELECT name, lvl FROM users ORDER BY lvl DESC, xp DESC LIMIT 10")
         users = self.cursor.fetchall()
         for row in users:
             counter += 1
@@ -85,7 +85,7 @@ class lb(commands.Cog):
                     inline = False
                 )
             else:
-                [print(row)]
+                print(row)
                 embed.add_field(
                     name = f'# {counter} | {row[0]}',
                     value = f'Часы: **{row[1]//60}** 🎙',
