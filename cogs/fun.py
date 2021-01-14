@@ -302,18 +302,20 @@ class fun(commands.Cog):
             await msg.add_reaction('🔴')
             await msg.add_reaction('🔁')
 
-    # @commands.Cog.listener()
-    # async def on_raw_reaction_add(self, payload):
-    #     guild_id = payload.guild_id
-    #     guild = discord.utils.find(lambda g : g.id == guild_id, self.client.guilds)
-    #     member = discord.utils.find(lambda m : m.id == payload.user_id, guild.members)
-    #     channel = self.client.get_channel(796005631865782273)
-    #     if member == self.client.user:
-    #         return
-    #     elif member.id == 312795489743405058:
-    #         return
-    #     else:
-    #         await channel.send(embed = discord.Embed(description = f'**{member.name}** нажал на красную кнопку!'), delete_after = 5)
+    @commands.Cog.listener()
+    async def on_raw_reaction_add(self, payload):
+        guild_id = payload.guild_id
+        guild = discord.utils.find(lambda g : g.id == guild_id, self.client.guilds)
+        member = discord.utils.find(lambda m : m.id == payload.user_id, guild.members)
+        channel = self.client.get_channel(796005631865782273)
+        if member != self.client.user:
+            if str(payload.emoji) == '🔴':
+                await channel.send(embed = discord.Embed(description = f'**{member.name}** нажал на красную кнопку!'), delete_after = 5)
+
+        # elif member.id == 312795489743405058:
+        #     return
+        else:
+            return
 
 
 

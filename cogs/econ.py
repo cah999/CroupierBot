@@ -623,7 +623,7 @@ class Economic(commands.Cog):
                             self.cursor.execute("SELECT balance FROM users WHERE id = {}".format(member.id))
                             mbal = self.cursor.fetchone()[0]
                             await ctx.send(f'**{member}** победил! Ему начислено **{amount} :tickets:**\nБаланс {member.name} составляет __{mbal}__:tickets:\nБаланс **{ctx.author.name}** составляет __{ubal}__:tickets:', delete_after = 15)
-                            self.cursor.execute("UPDATE users SET duel_wins = duel_wins + {} WHERE id = {}".format(1, member.id))   
+                            self.cursor.execute("UPDATE users SET duel_wins = duel_wins + {} WHERE id = {}".format(1, member.id))  
                             self.cursor.execute("UPDATE users SET duel_loses = duel_loses + {} WHERE id = {}".format(1, ctx.author.id))   
                             self.conn.commit()
                             self.cursor.execute("SELECT duel_wins FROM users WHERE id = {}".format(member.id))
