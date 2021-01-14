@@ -82,7 +82,7 @@ class Economic(commands.Cog):
         xp = self.cursor.fetchone()[0]
         self.cursor.execute("SELECT lvl FROM users WHERE id = {}".format(user.id))
         lvl = self.cursor.fetchone()[0]
-        if xp >= 400+100*lvl:
+        if xp >= 500+100*lvl:
             self.cursor.execute("UPDATE users SET lvl = lvl + {} WHERE id = {}".format(1, user.id))
             self.cursor.execute("UPDATE users SET xp = {} WHERE id = {}".format(0, user.id))
             self.cursor.execute("UPDATE users SET balance = balance + {} WHERE id = {}".format(lvl*100+100, user.id))
