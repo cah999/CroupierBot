@@ -43,6 +43,15 @@ async def on_ready():
                 conn.commit()
             else:
                 pass
+
+    cursor.execute("""DELETE FROM users a USING (
+        SELECT MIN(ctid) as ctid, key
+            FROM users 
+            GROUP BY key HAVING COUNT(*) > 1
+        ) b
+        WHERE a.key = b.key 
+        AND a.ctid <> b.ctid
+        """)
     conn.commit()
     print('Bot connected!')
     await client.change_presence(status=discord.Status.online, activity=discord.Game('Лучший казино бот так то'))
