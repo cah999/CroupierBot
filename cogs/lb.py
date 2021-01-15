@@ -23,9 +23,8 @@ class lb(commands.Cog):
         await ctx.message.delete()
         embed = discord.Embed(title = '👨🏻‍🏭 Топ 10 богатых сучек 👩🏻‍🔧', color = 0x32aafd)
         counter = 0
-        a = self.cursor.execute("SELECT balance FROM users ORDER BY balance DESC LIMIT 10 ")
+        self.cursor.execute("SELECT name, balance FROM users ORDER BY balance DESC LIMIT 5")
         users = self.cursor.fetchall()
-        print(users)
         for row in users:
             counter += 1
             if counter == 1:
@@ -49,9 +48,8 @@ class lb(commands.Cog):
         embed = discord.Embed(title = '🤴 Топ влиятельных сучек 👸', color = 0x32aafd)
         counter = 0
 
-        self.cursor.execute("SELECT name, lvl FROM users ORDER BY lvl DESC, xp DESC LIMIT 10")
+        self.cursor.execute("SELECT name, lvl FROM users ORDER BY lvl DESC, xp DESC LIMIT 5")
         users = self.cursor.fetchall()
-        print(users)
         for row in users:
             counter += 1
             if counter == 1:
@@ -74,11 +72,9 @@ class lb(commands.Cog):
         await ctx.message.delete()
         embed = discord.Embed(title = '👩‍🎤 Топ общительных сучек 👨‍🎤', color = 0x32aafd)
         counter = 0
-        self.cursor.execute("SELECT name, voice_minutes FROM users ORDER BY voice_minutes DESC LIMIT 10")
+        self.cursor.execute("SELECT name, voice_minutes FROM users ORDER BY voice_minutes DESC LIMIT 5")
         users = self.cursor.fetchall()
-        print(users)
         for row in users:
-            print(row)
             counter += 1
             if counter == 1:
                 embed.add_field(
@@ -87,7 +83,6 @@ class lb(commands.Cog):
                     inline = False
                 )
             else:
-                print(row)
                 embed.add_field(
                     name = f'# {counter} | {row[0]}',
                     value = f'Часы: **{row[1]//60}** 🎙',

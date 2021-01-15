@@ -44,14 +44,14 @@ async def on_ready():
             else:
                 pass
 
-    cursor.execute("""DELETE FROM users a USING (
-        SELECT MIN(ctid) as ctid, id
-            FROM users 
-            GROUP BY id HAVING COUNT(*) > 1
-        ) b
-        WHERE a.id = b.id 
-        AND a.ctid <> b.ctid
-        """)
+    # cursor.execute("""DELETE FROM users a USING (
+    #     SELECT MIN(ctid) as ctid, id
+    #         FROM users 
+    #         GROUP BY id HAVING COUNT(*) > 1
+    #     ) b
+    #     WHERE a.id = b.id 
+    #     AND a.ctid <> b.ctid
+    #     """)
     conn.commit()
     print('Bot connected!')
     await client.change_presence(status=discord.Status.online, activity=discord.Game('Лучший казино бот так то'))
