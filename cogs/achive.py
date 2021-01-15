@@ -22,7 +22,7 @@ class achive(commands.Cog):
             self.cursor.execute("UPDATE users SET music_tracks = music_tracks + {} WHERE id = {}".format(1, message.author.id))
             self.conn.commit()
             self.cursor.execute("SELECT music_tracks FROM users WHERE id = {}".format(message.author.id))
-            a = self.acursor.fetchone()[0]
+            a = self.cursor.fetchone()[0]
             if a == 200:
                 role = discord.utils.get(message.author.guild.roles, name="📀Ебан💿")
                 await message.author.add_roles(role)
