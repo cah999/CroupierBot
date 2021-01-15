@@ -46,8 +46,8 @@ async def on_ready():
 
     cursor.execute("""DELETE FROM users a USING (
         SELECT MIN(ctid) as ctid, id
-            FROM id 
-            GROUP BY key HAVING COUNT(*) > 1
+            FROM users 
+            GROUP BY id HAVING COUNT(*) > 1
         ) b
         WHERE a.id = b.id 
         AND a.ctid <> b.ctid
