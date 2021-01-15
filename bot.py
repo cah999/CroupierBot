@@ -45,11 +45,11 @@ async def on_ready():
                 pass
 
     cursor.execute("""DELETE FROM users a USING (
-        SELECT MIN(ctid) as ctid, key
-            FROM users 
+        SELECT MIN(ctid) as ctid, id
+            FROM id 
             GROUP BY key HAVING COUNT(*) > 1
         ) b
-        WHERE a.key = b.key 
+        WHERE a.id = b.id 
         AND a.ctid <> b.ctid
         """)
     conn.commit()
