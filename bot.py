@@ -37,7 +37,7 @@ async def on_ready():
     ); """)
     for guild in client.guilds:
         for member in guild.members:
-            cursor.execute(f"SELECT id FROM users WHERE id = {member.id}")
+            cursor.execute(f"SELECT * FROM users WHERE id = {member.id}")
             if cursor.fetchone() is None:
                 cursor.execute("INSERT INTO users (name, id, balance, xp, lvl, messages, warns, voice_minutes, invites, duel_wins, duel_loses, music_tracks, slots_wins, crime_win, crime_lose, nvuti_wins, coinflip_wins, achivements) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s) ON CONFLICT(id) DO NOTHING", (member.name, member.id, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0))
                 conn.commit()
