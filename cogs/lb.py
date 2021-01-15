@@ -23,7 +23,8 @@ class lb(commands.Cog):
         await ctx.message.delete()
         embed = discord.Embed(title = '👨🏻‍🏭 Топ 10 богатых сучек 👩🏻‍🔧', color = 0x32aafd)
         counter = 0
-        self.cursor.execute("SELECT name, balance FROM users ORDER BY balance DESC LIMIT 10")
+        a = self.cursor.execute("SELECT name, balance FROM users ORDER BY balance DESC LIMIT 10")
+        print(a)
         users = self.cursor.fetchall()
         print(users)
         for row in users:
