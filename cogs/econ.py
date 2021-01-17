@@ -166,12 +166,49 @@ class Economic(commands.Cog):
                 return
             elif (len(after.channel.members) > 1):
                 while after.channel and not after.self_mute:
+                    self.cursor.execute("UPDATE users SET xp = xp + {} WHERE id = {}".format(0,6, member.id))   
                     self.cursor.execute("UPDATE users SET balance = balance + {} WHERE id = {}".format(1, member.id))   
                     self.cursor.execute("UPDATE users SET voice_minutes = voice_minutes + 1 WHERE id = {}".format(member.id))   
                     self.conn.commit()
-
-                    self.cursor.execute("SELECT voice_minutes FROM users WHERE id = {}".format(member.id))
-                    voice = self.cursor.fetchone()[0]
+                    self.cursor.execute("SELECT xp FROM users WHERE id = {}".format(member.id))
+                    xp = self.cursor.fetchone()[0]
+                    self.cursor.execute("SELECT lvl FROM users WHERE id = {}".format(member.id))
+                    lvl = self.cursor.fetchone()[0]
+                    if xp >= 500+100*lvl:
+                        self.cursor.execute("UPDATE users SET lvl = lvl + {} WHERE id = {}".format(1, member.id))
+                        self.cursor.execute("UPDATE users SET xp = {} WHERE id = {}".format(0, member.id))
+                        self.cursor.execute("UPDATE users SET balance = balance + {} WHERE id = {}".format(lvl*100+100, member.id))
+                        self.conn.commit()
+                        self.cursor.execute("SELECT lvl FROM users WHERE id = {}".format(member.id))
+                        lvl = self.cursor.fetchone()[0]
+                        await member.send(embed = discord.Embed (description = f'Поздравляю! Ты получил **{lvl}** уровень!\nТвоя награда: **{lvl*100} :tickets: **', color=0xfbff00), delete_after=60*10)
+                        if lvl == 10:
+                            embed=discord.Embed(title="Ты получил новое достижение!🥳", description="**⭐️Мама, кажется, я расту!⭐️**", color=0x66fcff)
+                            await member.send(embed=embed)
+                            self.cursor.execute("UPDATE users SET achivements = achivements + {} WHERE id = {}".format(1, member.id))
+                            self.conn.commit()
+                        elif lvl == 20:
+                            embed=discord.Embed(title="Ты получил новое достижение!🥳", description="**🌟Биг Бой🌟**", color=0x66fcff)
+                            await member.send(embed=embed)
+                            self.cursor.execute("UPDATE users SET achivements = achivements + {} WHERE id = {}".format(1, member.id))
+                            self.conn.commit()
+                        elif lvl == 30:
+                            embed=discord.Embed(title="Ты получил новое достижение!🥳", description="**✨Дедуля✨**", color=0x66fcff)
+                            await member.send(embed=embed)
+                            self.cursor.execute("UPDATE users SET achivements = achivements + {} WHERE id = {}".format(1, member.id))
+                            self.conn.commit()
+                            self.cursor.execute("SELECT achivements FROM users WHERE id = {}".format(member.id))
+                            ach = self.cursor.fetchone()[0]
+                            if ach == 27:
+                                role = discord.utils.get(member.guild.roles, name="👑Склоните колено👑")
+                                await member.add_roles(role)
+                                embed=discord.Embed(title="Ты получил ПОСЛЕДНЕЕ достижение!🥳", description="**🏆ЛЕГЕНДА🏆**", color=0x66fcff)
+                                embed.add_field(name="Твоя награда", value="**10000 :tickets:**\nА также эксклюзивная роль ``👑Склоните колено👑``", inline=False)
+                                self.cursor.execute("UPDATE users SET balance = balance + {} WHERE id = {}".format(10000, member.id))
+                                self.conn.commit()
+                                await member.send(embed=embed)
+                                self.cursor.execute("SELECT voice_minutes FROM users WHERE id = {}".format(member.id))
+                                voice = self.cursor.fetchone()[0]
                     if voice == 60*100:
                         embed=discord.Embed(title="Ты получил новое достижение!🥳", description="**🥉Орунькаю🥉**", color=0x66fcff)
                         embed.add_field(name="Твоя награда", value="**1000 :tickets:**", inline=False)
