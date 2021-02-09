@@ -125,6 +125,15 @@ class mod(commands.Cog):
                 emb.set_footer(text = '{}'.format(ctx.author.name), icon_url = ctx.author.avatar_url)
                 await ctx.send(embed = emb, delete_after = 30)
 
+    @comamnds.command()
+    @commands.has_permissions(administrator = True)
+    async def clearwarns(self, ctx, member: discord.Member):
+        self.cursor.execute("UPDATE users SET warns = {} WHERE id = {}".format(0, member.id))   
+        self.conn.commit()
+        await ctx.send(embed=discord.Embed(description = f'С пользователя **{member.name}** сняты все варны!'), delete_after = 7)
+
+
+
     # Auto Role
     @commands.Cog.listener()
     async def on_member_join(self, member):

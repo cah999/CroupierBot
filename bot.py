@@ -9,7 +9,7 @@ DATABASE_URL = os.environ['DATABASE_URL']
 conn = psycopg2.connect(DATABASE_URL, sslmode = 'require')
 cursor = conn.cursor()
 client = commands.Bot(command_prefix="!", intents = discord.Intents(messages = True, guild_messages = True, members = True, guilds = True, reactions = True, voice_states = True, invites = True))
-# client.remove_command('help')
+client.remove_command('help')
 
 
 
@@ -57,17 +57,6 @@ async def on_ready():
     await client.change_presence(status=discord.Status.online, activity=discord.Game('Лучший казино бот так то'))
 
 
-
-# .play
-# @client.command()
-# @commands.has_permissions( administrator = True)
-# async def play(ctx, *, arg):
-    # embed=discord.Embed(title='Статус бота изменен!',color=0x37393F, description=' Бот теперь играет в ' + arg )
-    # await client.change_presence(status=discord.Status.online, activity=discord.Game(name=arg))
-    # await ctx.send(embed=embed, delete_after = 5)
-    # await ctx.message.delete()
-
-
 #status
 @client.command()
 @commands.has_permissions(administrator = True)
@@ -99,18 +88,6 @@ async def status(ctx, type = None, *, text = None):
             await client.change_presence(activity=discord.Activity(type=discord.ActivityType.watching, name=text))
             await ctx.send(embed=embed, delete_after = 5)
             await ctx.message.delete()
-    # elif (type == 'stream') or (type == 'Stream'):
-    #     if text is None:
-    #         await ctx.send(embed = discord.Embed(description = f'**{ctx.author.name}**, укажите текст статуса'), delete_after = 7)
-    #     elif url is None:
-    #         await ctx.send(embed = discord.Embed(description = f'**{ctx.author.name}**, укажите ссылку на стрим'), delete_after = 7)
-    #     else:
-    #         embed=discord.Embed(title='Статус бота изменен!',color=0x37393F, description='Бот теперь стримит ' + text )
-    #         await client.change_presence(activity=discord.Streaming(name=text, url=url))        
-    #         await ctx.send(embed=embed, delete_after = 5)
-    #         await ctx.message.delete()
-
-    
 
 
 # .listen
