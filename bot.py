@@ -70,7 +70,7 @@ async def on_ready():
 
 #status
 @client.command()
-@commands.has_permisions(administrator = True)
+@commands.has_permissions(administrator = True)
 async def status(ctx, *, type = None, arg = None, url = None):
     if type is None:
         await ctx.send(embed = discord.Embed(description = f'**{ctx.author.name}**, укажите тип изменения статуса'))
