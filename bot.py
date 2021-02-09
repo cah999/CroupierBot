@@ -71,7 +71,7 @@ async def on_ready():
 #status
 @client.command()
 @commands.has_permissions(administrator = True)
-async def status(ctx, type = None, text = None, url = None):
+async def status(ctx, type = None, url = None, *, text = None):
     await ctx.message.delete()
     if type is None:
         await ctx.send(embed = discord.Embed(description = f'**{ctx.author.name}**, укажите тип изменения статуса'), delete_after = 7)
