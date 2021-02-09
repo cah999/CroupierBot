@@ -130,7 +130,7 @@ class mod(commands.Cog):
     async def clearwarns(self, ctx, member: discord.Member):
         self.cursor.execute("UPDATE users SET warns = {} WHERE id = {}".format(0, member.id))   
         self.conn.commit()
-        await ctx.send(embed=discord.Embed(description = f'С пользователя **{member.name}** сняты все варны!'), delete_after = 7)
+        await ctx.send(embed=discord.Embed(description = f'С пользователя **{member.name}** сняты все варны!'), delete_after = 6)
 
 
 
