@@ -71,42 +71,42 @@ async def on_ready():
 #status
 @client.command()
 @commands.has_permissions(administrator = True)
-async def status(ctx, *, type = None, arg = None, url = None):
+async def status(ctx, type = None, text = None, url = None):
     await ctx.message.delete()
     if type is None:
         await ctx.send(embed = discord.Embed(description = f'**{ctx.author.name}**, укажите тип изменения статуса'), delete_after = 7)
     elif (type == 'play') or (type == 'Play'):
-        if arg is None:
+        if text is None:
             await ctx.send(embed = discord.Embed(description = f'**{ctx.author.name}**, укажите текст статуса'), delete_after = 7)
         else:
-            embed=discord.Embed(title='Статус бота изменен!',color=0x37393F, description='Бот теперь играет в ' + arg )
-            await client.change_presence(status=discord.Status.online, activity=discord.Game(name=arg))
+            embed=discord.Embed(title='Статус бота изменен!',color=0x37393F, description='Бот теперь играет в ' + text )
+            await client.change_presence(status=discord.Status.online, activity=discord.Game(name=text))
             await ctx.send(embed=embed, delete_after = 5)
             await ctx.message.delete()
     elif (type == 'listen') or (type == 'Listen'):
-        if arg is None:
+        if text is None:
             await ctx.send(embed = discord.Embed(description = f'**{ctx.author.name}**, укажите текст статуса'), delete_after = 7)
         else:
-            embed=discord.Embed(title='Статус бота изменен!',color=0x37393F, description='Бот теперь слушает ' + arg )
-            await client.change_presence(activity=discord.Activity(type=discord.ActivityType.listening, name=arg))
+            embed=discord.Embed(title='Статус бота изменен!',color=0x37393F, description='Бот теперь слушает ' + text )
+            await client.change_presence(activity=discord.Activity(type=discord.ActivityType.listening, name=text))
             await ctx.send(embed=embed, delete_after = 5)
             await ctx.message.delete()
     elif (type == 'watch') or (type == 'Watch'):
-        if arg is None:
+        if text is None:
             await ctx.send(embed = discord.Embed(description = f'**{ctx.author.name}**, укажите текст статуса'), delete_after = 7)
         else:
-            embed=discord.Embed(title='Статус бота изменен!',color=0x37393F, description='Бот теперь смотрит ' + arg )
-            await client.change_presence(activity=discord.Activity(type=discord.ActivityType.watching, name=arg))
+            embed=discord.Embed(title='Статус бота изменен!',color=0x37393F, description='Бот теперь смотрит ' + text )
+            await client.change_presence(activity=discord.Activity(type=discord.ActivityType.watching, name=text))
             await ctx.send(embed=embed, delete_after = 5)
             await ctx.message.delete()
     elif (type == 'stream') or (type == 'Stream'):
-        if arg is None:
+        if text is None:
             await ctx.send(embed = discord.Embed(description = f'**{ctx.author.name}**, укажите текст статуса'), delete_after = 7)
         elif url is None:
             await ctx.send(embed = discord.Embed(description = f'**{ctx.author.name}**, укажите ссылку на стрим'), delete_after = 7)
         else:
-            embed=discord.Embed(title='Статус бота изменен!',color=0x37393F, description='Бот теперь стримит ' + arg )
-            await client.change_presence(activity=discord.Streaming(name=arg, url=url))        
+            embed=discord.Embed(title='Статус бота изменен!',color=0x37393F, description='Бот теперь стримит ' + text )
+            await client.change_presence(activity=discord.Streaming(name=text, url=url))        
             await ctx.send(embed=embed, delete_after = 5)
             await ctx.message.delete()
 
