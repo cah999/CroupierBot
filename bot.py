@@ -71,7 +71,7 @@ async def on_ready():
 #status
 @client.command()
 @commands.has_permissions(administrator = True)
-async def status(ctx, type = None, url = None, *, text = None):
+async def status(ctx, type = None, *, text = None):
     await ctx.message.delete()
     if type is None:
         await ctx.send(embed = discord.Embed(description = f'**{ctx.author.name}**, укажите тип изменения статуса'), delete_after = 7)
@@ -99,16 +99,16 @@ async def status(ctx, type = None, url = None, *, text = None):
             await client.change_presence(activity=discord.Activity(type=discord.ActivityType.watching, name=text))
             await ctx.send(embed=embed, delete_after = 5)
             await ctx.message.delete()
-    elif (type == 'stream') or (type == 'Stream'):
-        if text is None:
-            await ctx.send(embed = discord.Embed(description = f'**{ctx.author.name}**, укажите текст статуса'), delete_after = 7)
-        elif url is None:
-            await ctx.send(embed = discord.Embed(description = f'**{ctx.author.name}**, укажите ссылку на стрим'), delete_after = 7)
-        else:
-            embed=discord.Embed(title='Статус бота изменен!',color=0x37393F, description='Бот теперь стримит ' + text )
-            await client.change_presence(activity=discord.Streaming(name=text, url=url))        
-            await ctx.send(embed=embed, delete_after = 5)
-            await ctx.message.delete()
+    # elif (type == 'stream') or (type == 'Stream'):
+    #     if text is None:
+    #         await ctx.send(embed = discord.Embed(description = f'**{ctx.author.name}**, укажите текст статуса'), delete_after = 7)
+    #     elif url is None:
+    #         await ctx.send(embed = discord.Embed(description = f'**{ctx.author.name}**, укажите ссылку на стрим'), delete_after = 7)
+    #     else:
+    #         embed=discord.Embed(title='Статус бота изменен!',color=0x37393F, description='Бот теперь стримит ' + text )
+    #         await client.change_presence(activity=discord.Streaming(name=text, url=url))        
+    #         await ctx.send(embed=embed, delete_after = 5)
+    #         await ctx.message.delete()
 
     
 
