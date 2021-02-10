@@ -90,15 +90,6 @@ async def status(ctx, type = None, *, text = None):
             await ctx.message.delete()
 
 
-# .listen
-@client.command()
-@commands.has_permissions( administrator = True)
-async def listen(ctx, *, arg):
-    embed=discord.Embed(title='Статус бота изменен!',color=0x37393F, description=' Бот теперь слушает ' + arg )
-    await client.change_presence(status=discord.Status.online, activity=discord.Activity(name=arg, type=discord.ActivityType.listening))
-    await ctx.send(embed=embed, delete_after = 5)
-    await ctx.message.delete()
-
 @client.command()
 async def ping(ctx):
     await ctx.send('Pong!')
