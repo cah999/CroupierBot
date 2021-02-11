@@ -169,11 +169,11 @@ class Economic(commands.Cog):
                     self.cursor.execute("UPDATE users SET xp = xp + {} WHERE id = {}".format(0.5, member.id))   
                     self.cursor.execute("UPDATE users SET balance = balance + {} WHERE id = {}".format(1, member.id))   
                     self.cursor.execute("UPDATE users SET voice_minutes = voice_minutes + 1 WHERE id = {}".format(member.id))   
-                    self.conn.commit()
                     self.cursor.execute("SELECT xp FROM users WHERE id = {}".format(member.id))
                     xp = self.cursor.fetchone()[0]
                     self.cursor.execute("SELECT lvl FROM users WHERE id = {}".format(member.id))
                     lvl = self.cursor.fetchone()[0]
+                    self.conn.commit()
                     if xp >= 500+100*lvl:
                         self.cursor.execute("UPDATE users SET lvl = lvl + {} WHERE id = {}".format(1, member.id))
                         self.cursor.execute("UPDATE users SET xp = {} WHERE id = {}".format(0, member.id))
