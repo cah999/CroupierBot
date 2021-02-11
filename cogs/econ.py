@@ -168,8 +168,9 @@ class Economic(commands.Cog):
                 while after.channel and not after.self_mute:
                     self.cursor.execute("UPDATE users SET xp = xp + {} WHERE id = {}".format(0.5, member.id))   
                     self.cursor.execute("UPDATE users SET balance = balance + {} WHERE id = {}".format(1, member.id))   
-                    self.cursor.execute("UPDATE users SET voice_minutes = voice_minutes + 1 WHERE id = {}".format(member.id))   
+                    self.cursor.execute("UPDATE users SET voice_minutes = voice_minutes + {} WHERE id = {}".format(1, member.id))   
                     self.cursor.execute("SELECT xp FROM users WHERE id = {}".format(member.id))
+                    print(f'{member.name} получил +1 минуту')
                     xp = self.cursor.fetchone()[0]
                     self.cursor.execute("SELECT lvl FROM users WHERE id = {}".format(member.id))
                     lvl = self.cursor.fetchone()[0]
