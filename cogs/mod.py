@@ -1,8 +1,6 @@
 import discord
 from discord.ext import commands, tasks
 from discord import utils
-import sqlite3
-from Cybernator import Paginator
 import asyncio
 import random
 import datetime
