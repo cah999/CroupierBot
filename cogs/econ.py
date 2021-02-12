@@ -166,11 +166,12 @@ class Economic(commands.Cog):
                 return
             elif (len(after.channel.members) > 1):
                 while after.channel and not after.self_mute:
+                    await asyncio.sleep(60)
                     self.cursor.execute("UPDATE users SET xp = xp + {} WHERE id = {}".format(0.5, member.id))   
                     self.cursor.execute("UPDATE users SET balance = balance + {} WHERE id = {}".format(1, member.id))   
                     self.cursor.execute("UPDATE users SET voice_minutes = voice_minutes + {} WHERE id = {}".format(1, member.id))   
                     self.cursor.execute("SELECT xp FROM users WHERE id = {}".format(member.id))
-                    print(f'{member.name} получил +1 минуту')
+                    # print(f'{member.name} получил +1 минуту')
                     xp = self.cursor.fetchone()[0]
                     self.cursor.execute("SELECT lvl FROM users WHERE id = {}".format(member.id))
                     lvl = self.cursor.fetchone()[0]
@@ -243,7 +244,7 @@ class Economic(commands.Cog):
                             self.cursor.execute("UPDATE users SET balance = balance + {} WHERE id = {}".format(10000, member.id))   
                             self.conn.commit()
 
-                    await asyncio.sleep(60)
+                    
                 else:
                     return
         elif not after.channel:
