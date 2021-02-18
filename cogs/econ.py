@@ -1093,7 +1093,7 @@ class Economic(commands.Cog):
                     for member in guild.members:
                         # self.cursor.execute("UPDATE users SET balance = 0, lvl = 1, xp = 0, messages = 0, warns = 0, voice_minutes = 0, invites = 0, duel_wins = 0, duel_loses = 0, music_tracks = 0, slots_wins = 0, crime_win = 0, crime_lose = 0, nvuti_wins = 0, coinflip_wins = 0, achivements = 0 WHERE id = {}".format(member.id))
                         self.cursor.execute("UPDATE users1 SET server_id = {} WHERE id = {}".format(guild.id, member.id))
-                        self.cursor.execute("INSERT INTO users1 (name, id, balance, xp, lvl, messages, warns, voice_minutes, invites, duel_wins, duel_loses, music_tracks, slots_wins, crime_win, crime_lose, nvuti_wins, coinflip_wins, achivements) SELECT name, id, balance, xp, lvl, messages, warns, voice_minutes, invites, duel_wins, duel_loses, music_tracks, slots_wins, crime_win, crime_lose, nvuti_wins, coinflip_wins, achivements FROM users")
+                        # self.cursor.execute("INSERT INTO users1 (name, id, balance, xp, lvl, messages, warns, voice_minutes, invites, duel_wins, duel_loses, music_tracks, slots_wins, crime_win, crime_lose, nvuti_wins, coinflip_wins, achivements) SELECT name, id, balance, xp, lvl, messages, warns, voice_minutes, invites, duel_wins, duel_loses, music_tracks, slots_wins, crime_win, crime_lose, nvuti_wins, coinflip_wins, achivements FROM users")
                         self.conn.commit()
                 await ctx.send("Complited!")
                         # await ctx.send(f'{member.name} обнулён', delete_after = 3)
