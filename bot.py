@@ -13,6 +13,7 @@ client.remove_command('help')
 
 @client.event
 async def on_ready():
+    cursor.execute("DROP TABLE users1")
     cursor.execute("""CREATE TABLE IF NOT EXISTS users1 (
         name text,
         id bigint PRIMARY KEY,
@@ -94,35 +95,35 @@ async def status(ctx, type=None, *, text=None):
 async def ping(ctx):
     cursor.execute("SELECT server_id FROM users1 WHERE id = {}".format(ctx.author.id))
     a = cursor.fetchone()[0]
-    await ctx.send(f'Pong! Your server id is **{a}**')
-    embed = discord.Embed(title="Статистика вашего аккаунта на сервере БиШ", color=0xff8800)
-    embed.add_field(name="Имя", value=f'**{ctx.author}** 👦🏽', inline=False)
-    embed.add_field(name="Дата захода на сервер", value=f'**{ctx.author.joined_at.strftime("%m/%d/%Y")}** 📅', inline=False)
-    cursor.execute("SELECT balance FROM 1 WHERE id = {}".format(ctx.author.id))
-    embed.add_field(name="Баланс", value=f'**{cursor.fetchone()[0]} :tickets:**', inline=False)
-    cursor.execute("SELECT lvl FROM users1 WHERE id = {}".format(ctx.author.id))
-    embed.add_field(name="Уровень", value=f'**{cursor.fetchone()[0]} :confetti_ball:**', inline=False)
-    cursor.execute("SELECT lvl FROM users1 WHERE id = {}".format(ctx.author.id))
-    all = 500 + 100 * cursor.fetchone()[0]
-    cursor.execute("SELECT xp FROM users1 WHERE id = {}".format(ctx.author.id))
-    embed.add_field(name="Опыт", value=f'**{cursor.fetchone()[0]}/{all} ⭐️**', inline=False)
-    cursor.execute("SELECT messages FROM users1 WHERE id = {}".format(ctx.author.id))
-    embed.add_field(name="Количество сообщений", value=f'**{cursor.fetchone()[0]} :e_mail:**', inline=False)
-    cursor.execute("SELECT voice_minutes FROM users1 WHERE id = {}".format(ctx.author.id))
-    a = cursor.fetchone()[0]
-    if a // 60 < 10:
-        if a % 60 < 10:
-            embed.add_field(name="Время проведённое в войсе", value=f'**0{a // 60}:0{a % 60} 🎤 **', inline=False)
-        else:
-            embed.add_field(name="Время проведённое в войсе", value=f'**0{a // 60}:{a % 60} 🎤 **', inline=False)
-    else:
-        if a % 60 < 10:
-            embed.add_field(name="Время проведённое в войсе", value=f'**{a // 60}:0{a % 60} 🎤 **', inline=False)
-        else:
-            embed.add_field(name="Время проведённое в войсе", value=f'**{a // 60}:{a % 60} 🎤 **', inline=False)
-    cursor.execute("SELECT warns FROM users1 WHERE id = {}".format(ctx.author.id))
-    embed.add_field(name="Количество варнов", value=f'**{cursor.fetchone()[0]} :no_entry:**', inline=False)
-    await ctx.author.send(embed=embed, delete_after=60 * 5)
+    await ctx.send(f'Pong! Your server id is **{a}**', delete_after = 5)
+    # embed = discord.Embed(title="Статистика вашего аккаунта на сервере БиШ", color=0xff8800)
+    # embed.add_field(name="Имя", value=f'**{ctx.author}** 👦🏽', inline=False)
+    # embed.add_field(name="Дата захода на сервер", value=f'**{ctx.author.joined_at.strftime("%m/%d/%Y")}** 📅', inline=False)
+    # cursor.execute("SELECT balance FROM 1 WHERE id = {}".format(ctx.author.id))
+    # embed.add_field(name="Баланс", value=f'**{cursor.fetchone()[0]} :tickets:**', inline=False)
+    # cursor.execute("SELECT lvl FROM users1 WHERE id = {}".format(ctx.author.id))
+    # embed.add_field(name="Уровень", value=f'**{cursor.fetchone()[0]} :confetti_ball:**', inline=False)
+    # cursor.execute("SELECT lvl FROM users1 WHERE id = {}".format(ctx.author.id))
+    # all = 500 + 100 * cursor.fetchone()[0]
+    # cursor.execute("SELECT xp FROM users1 WHERE id = {}".format(ctx.author.id))
+    # embed.add_field(name="Опыт", value=f'**{cursor.fetchone()[0]}/{all} ⭐️**', inline=False)
+    # cursor.execute("SELECT messages FROM users1 WHERE id = {}".format(ctx.author.id))
+    # embed.add_field(name="Количество сообщений", value=f'**{cursor.fetchone()[0]} :e_mail:**', inline=False)
+    # cursor.execute("SELECT voice_minutes FROM users1 WHERE id = {}".format(ctx.author.id))
+    # a = cursor.fetchone()[0]
+    # if a // 60 < 10:
+    #     if a % 60 < 10:
+    #         embed.add_field(name="Время проведённое в войсе", value=f'**0{a // 60}:0{a % 60} 🎤 **', inline=False)
+    #     else:
+    #         embed.add_field(name="Время проведённое в войсе", value=f'**0{a // 60}:{a % 60} 🎤 **', inline=False)
+    # else:
+    #     if a % 60 < 10:
+    #         embed.add_field(name="Время проведённое в войсе", value=f'**{a // 60}:0{a % 60} 🎤 **', inline=False)
+    #     else:
+    #         embed.add_field(name="Время проведённое в войсе", value=f'**{a // 60}:{a % 60} 🎤 **', inline=False)
+    # cursor.execute("SELECT warns FROM users1 WHERE id = {}".format(ctx.author.id))
+    # embed.add_field(name="Количество варнов", value=f'**{cursor.fetchone()[0]} :no_entry:**', inline=False)
+    # await ctx.author.send(embed=embed, delete_after=60 * 5)
 
 
 @client.event
