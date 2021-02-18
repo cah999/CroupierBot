@@ -13,6 +13,7 @@ client.remove_command('help')
 
 @client.event
 async def on_ready():
+    cursor.execute("DROP TABLE users1")
     cursor.execute("""CREATE TABLE IF NOT EXISTS users1 (
         name text,
         id bigint PRIMARY KEY,
