@@ -1091,7 +1091,8 @@ class Economic(commands.Cog):
                 await message.delete()
                 for guild in self.client.guilds:
                     for member in guild.members:
-                        self.cursor.execute("UPDATE users SET balance = 0, lvl = 1, xp = 0, messages = 0, warns = 0, voice_minutes = 0, invites = 0, duel_wins = 0, duel_loses = 0, music_tracks = 0, slots_wins = 0, crime_win = 0, crime_lose = 0, nvuti_wins = 0, coinflip_wins = 0, achivements = 0 WHERE id = {}".format(member.id))
+                        # self.cursor.execute("UPDATE users SET balance = 0, lvl = 1, xp = 0, messages = 0, warns = 0, voice_minutes = 0, invites = 0, duel_wins = 0, duel_loses = 0, music_tracks = 0, slots_wins = 0, crime_win = 0, crime_lose = 0, nvuti_wins = 0, coinflip_wins = 0, achivements = 0 WHERE id = {}".format(member.id))
+                        self.cursor.execute("UPDATE users SET server_id = {} WHERE id = {}".format(guild.id, member.id))
                         self.conn.commit()
                         await ctx.send(f'{member.name} обнулён', delete_after = 3)
         else:
