@@ -91,7 +91,8 @@ async def status(ctx, type=None, *, text=None):
 
 @client.command()
 async def ping(ctx):
-    await ctx.send('Pong!')
+    cursor.execute("SELECT balance FROM users WHERE id = {}".format(ctx.author.id))
+    await ctx.send('Pong! Your server id is **{cursor.fetchone()[0]}**')
 
 @client.event
 async def on_member_join(member):
