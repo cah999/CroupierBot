@@ -53,16 +53,16 @@ async def on_ready():
     #     """)
     conn.commit()
     print('Bot connected!')
-    await client.change_presence(status=discord.Status.online, activity=discord.Game('Лучший казино бот так то'))
+    await client.change_presence(status=discord.Status.online, activity=discord.Game('в жизнь'))
 
 
 #status
 @client.command()
-@commands.has_permissions(administrator = True)
-async def status(ctx, type = None, *, text = None):
+@commands.has_permissions(administrator=True)
+async def status(ctx, type=None, *, text=None):
     await ctx.message.delete()
     if type is None:
-        await ctx.send(embed = discord.Embed(description = f'**{ctx.author.name}**, укажите тип изменения статуса'), delete_after = 7)
+        await ctx.send(embed = discord.Embed(description=f'**{ctx.author.name}**, укажите тип изменения статуса'), delete_after = 7)
     elif (type == 'play') or (type == 'Play'):
         if text is None:
             await ctx.send(embed = discord.Embed(description = f'**{ctx.author.name}**, укажите текст статуса'), delete_after = 7)
@@ -107,11 +107,11 @@ async def on_member_join(member):
 @client.event
 async def on_command_error(ctx, error):
 	print(error)
-
-	if isinstance(error, commands.UserInputError):
-		await ctx.send(embed = discord.Embed(
-			description = f"Правильное использование команды: `{ctx.prefix}{ctx.command.usage}`"
-		), delete_after = 10)
+    #
+	# if isinstance(error, commands.UserInputError):
+	# 	await ctx.send(embed = discord.Embed(
+	# 		description = f"Правильное использование команды: `{ctx.prefix}{ctx.command.usage}`"
+	# 	), delete_after = 10)
 
 
 @client.command()
@@ -120,7 +120,7 @@ async def reload(ctx, extensions):
     if ctx.author.id == 312795489743405058:
         client.unload_extension(f'cogs.{extensions}')
         client.load_extension(f'cogs.{extensions}')
-        embed=discord.Embed(description=f":white_check_mark: Reload\n__{extensions}__ **reloaded!**", color=0x00ff1e)
+        embed=discord.Embed(title=f":white_check_mark: Reload", description=f"\n__{extensions}__ **reloaded!**", color=0x00ff1e)
         await ctx.send(embed=embed, delete_after=3)
 
 for filename in os.listdir('./cogs'):
