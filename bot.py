@@ -13,7 +13,7 @@ client.remove_command('help')
 
 @client.event
 async def on_ready():
-    cursor.execute("""CREATE TABLE IF NOT EXISTS users (
+    cursor.execute("""CREATE TABLE IF NOT EXISTS users1 (
         name text,
         id bigint PRIMARY KEY,
 	    balance bigint,
@@ -38,7 +38,9 @@ async def on_ready():
         for member in guild.members:
             cursor.execute(f"SELECT * FROM users WHERE id = {member.id}")
             if cursor.fetchone() is None:
-                cursor.execute("INSERT INTO users (name, id, balance, xp, lvl, messages, warns, voice_minutes, invites, duel_wins, duel_loses, music_tracks, slots_wins, crime_win, crime_lose, nvuti_wins, coinflip_wins, achivements, server_id) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s) ON CONFLICT DO NOTHING", (member.name, member.id, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, guild.id))
+                # cursor.execute("INSERT INTO users1 (name, id, balance, xp, lvl, messages, warns, voice_minutes, invites, duel_wins, duel_loses, music_tracks, slots_wins, crime_win, crime_lose, nvuti_wins, coinflip_wins, achivements, server_id) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s) ON CONFLICT DO NOTHING", (member.name, member.id, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, guild.id))
+                cursor.execute("INSERT INTO users1 (name, id, balance, xp, lvl, messages, warns, voice_minutes, invites, duel_wins, duel_loses, music_tracks, slots_wins, crime_win, crime_lose, nvuti_wins, coinflip_wins, achivements) SELECT name, id, balance, xp, lvl, messages, warns, voice_minutes, invites, duel_wins, duel_loses, music_tracks, slots_wins, crime_win, crime_lose, nvuti_wins, coinflip_wins, achivements FROM users"))
+
                 conn.commit()
             else:
                 pass
@@ -106,7 +108,7 @@ async def on_member_join(member):
         pass
 
 @client.event
-async def on_command_error(ctx, error):
+async def on_command_error(error):
 	print(error)
     #
 	# if isinstance(error, commands.UserInputError):
