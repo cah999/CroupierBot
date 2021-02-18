@@ -32,7 +32,7 @@ async def on_ready():
         nvuti_wins int,
         coinflip_wins int,
         achivements int,
-        server_id int
+        server_id bigint
     ); """)
     for guild in client.guilds:
         for member in guild.members:
@@ -94,7 +94,7 @@ async def status(ctx, type=None, *, text=None):
 async def ping(ctx):
     cursor.execute("SELECT balance FROM users1 WHERE id = {}".format(ctx.author.id))
     a = cursor.fetchone()[0]
-    await ctx.send(f'Pong! Your server id is **{a}** __{cursor.fetchone()}__')
+    await ctx.send(f'Pong! Your server id is **{a}**')
     embed = discord.Embed(title="Статистика вашего аккаунта на сервере БиШ", color=0xff8800)
     embed.add_field(name="Имя", value=f'**{ctx.author}** 👦🏽', inline=False)
     embed.add_field(name="Дата захода на сервер", value=f'**{ctx.author.joined_at.strftime("%m/%d/%Y")}** 📅', inline=False)
