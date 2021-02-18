@@ -13,7 +13,7 @@ client.remove_command('help')
 
 @client.event
 async def on_ready():
-    cursor.execute("DROP TABLE users1")
+    # cursor.execute("DROP TABLE users1")
     cursor.execute("""CREATE TABLE IF NOT EXISTS users1 (
         name text,
         id bigint PRIMARY KEY,
@@ -95,7 +95,7 @@ async def status(ctx, type=None, *, text=None):
 async def ping(ctx):
     cursor.execute("SELECT server_id FROM users1 WHERE id = {}".format(ctx.author.id))
     a = cursor.fetchone()[0]
-    await ctx.send(f'Pong! Your server id is **{a}**', delete_after = 5)
+    await ctx.send(f'Pong! Your server id is **{a}**', delete_after=5)
     # embed = discord.Embed(title="Статистика вашего аккаунта на сервере БиШ", color=0xff8800)
     # embed.add_field(name="Имя", value=f'**{ctx.author}** 👦🏽', inline=False)
     # embed.add_field(name="Дата захода на сервер", value=f'**{ctx.author.joined_at.strftime("%m/%d/%Y")}** 📅', inline=False)
