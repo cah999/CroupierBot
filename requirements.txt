@@ -10,7 +10,7 @@ chardet==3.0.4
 colorama==0.4.3
 Command===0.1.0
 Cybernator==0.6.2
-discord.py==1.5.0
+discord.py==1.6.0
 DiscordUtils==1.2.5
 dnspython==1.16.0
 idna==2.10

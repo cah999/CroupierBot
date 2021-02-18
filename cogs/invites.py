@@ -2,9 +2,10 @@ import discord
 from discord.ext import commands
 from collections import defaultdict
 from datetime import datetime
-import sqlite3
 import psycopg2
 import os
+
+
 class InviteTracker(commands.Cog, name='Invites'):
     def __init__(self, client):
         self.client = client

@@ -1,12 +1,7 @@
 import discord
 from discord.ext import commands
-from datetime import datetime, timedelta
 import random
-import requests
 import asyncio
-import sqlite3
-import psycopg2
-import os
 class giveaway(commands.Cog):
 
     def __init__(self, client):

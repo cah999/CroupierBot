@@ -1,10 +1,5 @@
-import asyncio
-import random
-import datetime
 import discord
 from discord.ext import commands, tasks
-from discord import utils
-import sqlite3
 import psycopg2
 import os
 

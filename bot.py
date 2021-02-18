@@ -1,8 +1,6 @@
 import discord
-import os, random, asyncio
+import os
 from discord.ext import commands
-from discord.ext import tasks
-from discord import utils
 import psycopg2
 
 DATABASE_URL = os.environ['DATABASE_URL']
@@ -33,13 +31,14 @@ async def on_ready():
         crime_lose int,
         nvuti_wins int,
         coinflip_wins int,
-        achivements int
+        achivements int,
+        server_id int
     ); """)
     for guild in client.guilds:
         for member in guild.members:
             cursor.execute(f"SELECT * FROM users WHERE id = {member.id}")
             if cursor.fetchone() is None:
-                cursor.execute("INSERT INTO users (name, id, balance, xp, lvl, messages, warns, voice_minutes, invites, duel_wins, duel_loses, music_tracks, slots_wins, crime_win, crime_lose, nvuti_wins, coinflip_wins, achivements) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s) ON CONFLICT DO NOTHING", (member.name, member.id, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0))
+                cursor.execute("INSERT INTO users (name, id, balance, xp, lvl, messages, warns, voice_minutes, invites, duel_wins, duel_loses, music_tracks, slots_wins, crime_win, crime_lose, nvuti_wins, coinflip_wins, achivements, server_id) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s) ON CONFLICT DO NOTHING", (member.name, member.id, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, guild.id))
                 conn.commit()
             else:
                 pass
@@ -99,8 +98,9 @@ async def on_member_join(member):
     cursor.execute(f"SELECT id FROM users WHERE id = {member.id}")
     a = cursor.fetchone()[0]
     if a is None:
-        cursor.execute(f"INSERT INTO users (name, id, balance, xp, lvl, messages, warns, voice_minutes, invites, duel_wins, duel_loses, music_tracks, slots_wins, crime_win, crime_lose, nvuti_wins, coinflip_wins, achivements) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)", (member.name, member.id, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0))
-        conn.commit()
+        for guild in client.guilds:
+            cursor.execute(f"INSERT INTO users (name, id, balance, xp, lvl, messages, warns, voice_minutes, invites, duel_wins, duel_loses, music_tracks, slots_wins, crime_win, crime_lose, nvuti_wins, coinflip_wins, achivements, server_id) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)", (member.name, member.id, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, guild.id))
+            conn.commit()
     else:
         pass
 

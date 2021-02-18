@@ -1,8 +1,5 @@
 import discord
-from discord.ext import commands, tasks
-from discord import utils
-import asyncio
-import random
+from discord.ext import commands
 import datetime
 import psycopg2
 import os
@@ -12,8 +9,9 @@ answer4 = ['Это невозможно сделать, так как выгна
 answer3 = ['У вас не хватает прав!', 'Его роль стоит выше вашей!', 'Это нельзя сделать!', 'Ваша роль менее значима, чем этого пользователя!']
 answer2 = ['Ты быканул на основателя сервера, или мне показалось?', 'Что он такого плохого тебе сделал?', 'При всём уважении к тебе я так не могу сделать!', 'Ах если бы я так мог...', 'Я не буду этого делать!', 'Сорян, но не в моих это силах!']
 answer = ['Самоубийство не приведёт ни к чему хорошему!', 'Напомню: суицид - не выход!', 'Увы, я не могу этого сделать!', 'Самоубийство - не выход!', 'Не надо к себе так относиться!', 'Я не сделаю этого!', 'Я не буду это делать!', 'Я не выполню это действие', 'Не заставляй меня это сделать!']
-class mod(commands.Cog):
 
+
+class mod(commands.Cog):
     def __init__(self, client):
         self.client = client
         DATABASE_URL = os.environ['DATABASE_URL']

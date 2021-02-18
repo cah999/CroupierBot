@@ -1,21 +1,16 @@
-import asyncio
-import random
-import datetime
 import discord
-from discord.ext import commands, tasks
-from discord import utils
-import sqlite3
+from discord.ext import commands
 import psycopg2
 import os
 
+
 class achive(commands.Cog):
-    
     def __init__(self, client):
         self.client = client
         DATABASE_URL = os.environ['DATABASE_URL']
         self.conn = psycopg2.connect(DATABASE_URL, sslmode = 'require')
         self.cursor = self.conn.cursor()
-        
+
     @commands.Cog.listener()
     async def on_message(self, message):
         if message.content.startswith('.play'):
@@ -34,7 +29,7 @@ class achive(commands.Cog):
                 self.conn.commit()
                 await message.author.send(embed=embed)
                 self.cursor.execute("SELECT achivements FROM users WHERE id = {}".format(message.author.id)) 
-                ach = self.acursor.fetchone()[0]
+                ach = self.cursor.fetchone()[0]
                 if ach == 27:
                     role = discord.utils.get(message.author.guild.roles, name="👑Склоните колено👑")
                     await message.author.add_roles(role)

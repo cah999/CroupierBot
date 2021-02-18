@@ -1,11 +1,9 @@
 import discord
 from discord.ext import commands
-import sqlite3
 import random
 import asyncio
 from datetime import datetime
 import datetime
-import threading
 import os
 import psycopg2
 """            
@@ -67,8 +65,6 @@ class Economic(commands.Cog):
         DATABASE_URL = os.environ['DATABASE_URL']
         self.conn = psycopg2.connect(DATABASE_URL, sslmode = 'require')
         self.cursor = self.conn.cursor()
-
-
 
     #Level-system
     @commands.Cog.listener()
@@ -156,15 +152,13 @@ class Economic(commands.Cog):
                 self.conn.commit()
                 await user.send(embed=embed)
 
-
-
     #Voice-ticket-xp system
     @commands.Cog.listener()
     async def on_voice_state_update(self, member, before, after):
         if after.channel:
             if after.mute or after.self_mute:
                 return
-            elif (len(after.channel.members) > 1):
+            elif len(after.channel.members) > 1:
                 while after.channel and not after.self_mute:
                     await asyncio.sleep(60)
                     self.cursor.execute("UPDATE users SET xp = xp + {} WHERE id = {}".format(0.5, member.id))   
@@ -243,18 +237,14 @@ class Economic(commands.Cog):
                             embed.add_field(name="Твоя награда", value="**10000 :tickets:**\nА также эксклюзивная роль ``👑Склоните колено👑``", inline=False)
                             self.cursor.execute("UPDATE users SET balance = balance + {} WHERE id = {}".format(10000, member.id))   
                             self.conn.commit()
-
-                    
                 else:
                     return
         elif not after.channel:
             # на случай если человек вышел из канала
             return
 
-
-
     # Info
-    @commands.command(aliases = ['info', 'INFO', 'Info', 'balance'], usage = '!info / !info <@user> (при достижении 15 уровня) ')
+    @commands.command(aliases = ['info', 'INFO', 'Info', 'balance'], usage ='!info / !info <@user> (при достижении 15 уровня)')
     async def __info(self, ctx, member: discord.Member = None):
         await ctx.message.delete()
         if member is None:
@@ -339,8 +329,6 @@ class Economic(commands.Cog):
             return str(datetime.timedelta(seconds = n))
         if isinstance(error, commands.errors.CommandOnCooldown):
             await ctx.author.send(embed = discord.Embed(description = f':no_entry: {ctx.author.name}, ты сегодня уже брал дневной бонус\nПопробуй снова через: **{convert(n)}**!', color = 0xFFA500), delete_after = 60)
-
-
 
     # GIVE
     @commands.command(aliases = ['give'], usage = 'give <@user> <amount>')

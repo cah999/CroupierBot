@@ -1,10 +1,7 @@
 import discord
 from discord.ext import commands
 import random
-import requests
 import asyncio
-import io
-import sqlite3
 import psycopg2
 import os
 class fun(commands.Cog):
