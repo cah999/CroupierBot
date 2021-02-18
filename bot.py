@@ -93,7 +93,8 @@ async def status(ctx, type=None, *, text=None):
 @client.command()
 async def ping(ctx):
     cursor.execute("SELECT balance FROM users1 WHERE id = {}".format(ctx.author.id))
-    await ctx.send('Pong! Your server id is **{cursor.fetchone()[0]}**')
+    a = cursor.fetchone()[0]
+    await ctx.send(f'Pong! Your server id is **{a}** __{cursor.fetchone()}__')
     embed = discord.Embed(title="Статистика вашего аккаунта на сервере БиШ", color=0xff8800)
     embed.add_field(name="Имя", value=f'**{ctx.author}** 👦🏽', inline=False)
     embed.add_field(name="Дата захода на сервер", value=f'**{ctx.author.joined_at.strftime("%m/%d/%Y")}** 📅', inline=False)
@@ -122,6 +123,8 @@ async def ping(ctx):
     cursor.execute("SELECT warns FROM users1 WHERE id = {}".format(ctx.author.id))
     embed.add_field(name="Количество варнов", value=f'**{cursor.fetchone()[0]} :no_entry:**', inline=False)
     await ctx.author.send(embed=embed, delete_after=60 * 5)
+
+
 @client.event
 async def on_member_join(member):
     cursor.execute(f"SELECT id FROM users1 WHERE id = {member.id}")
@@ -134,13 +137,12 @@ async def on_member_join(member):
         pass
 
 @client.event
-async def on_command_error(error):
+async def on_command_error(ctx, error):
 	print(error)
-    #
-	# if isinstance(error, commands.UserInputError):
-	# 	await ctx.send(embed = discord.Embed(
-	# 		description = f"Правильное использование команды: `{ctx.prefix}{ctx.command.usage}`"
-	# 	), delete_after = 10)
+	if isinstance(error, commands.UserInputError):
+		await ctx.send(embed = discord.Embed(
+			description = f"Правильное использование команды: `{ctx.prefix}{ctx.command.usage}`"
+		), delete_after = 10)
 
 
 @client.command()
