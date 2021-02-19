@@ -93,8 +93,9 @@ async def status(ctx, type=None, *, text=None):
 
 @client.command()
 async def ping(ctx):
+    await ctx.message.delete()
     cursor.execute("SELECT server_id FROM users1 WHERE id = {}".format(ctx.author.id))
-    a = cursor.fetchone()[0]
+    a = cursor.fetchone()
     await ctx.send(f'Pong! Your server id is **{a}**', delete_after=5)
     # embed = discord.Embed(title="Статистика вашего аккаунта на сервере БиШ", color=0xff8800)
     # embed.add_field(name="Имя", value=f'**{ctx.author}** 👦🏽', inline=False)
