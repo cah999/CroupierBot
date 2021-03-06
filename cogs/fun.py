@@ -14,47 +14,47 @@ class fun(commands.Cog):
 
     @commands.command(
         name="ролл",
-        aliases=["rolling"],
+        aliases=["roll"],
         breif="Генерация случайного числа от 1 до 100",
         usage="roll"
         )
-    async def __roll2(self, ctx, *args):
+    async def __roll(self, ctx, *args):
         await ctx.message.delete()
         if args is None:
             rand = random.randint(1, 100)
             await ctx.send(embed=discord.Embed(
                 description=f"**{ctx.author.name}** роллит **1-100**\n"
-                            f"Ваше случайное число: **{rand}** :diamonds:", color=0x00bfff))
+                            f"Ваше случайное число: **{rand}** :diamonds:", color=0x00bfff), delete_after=60)
         else:
             min = args.split('-')[0]
             max = args.split('-')[1]
             rand = random.randint(min, max)
             await ctx.send(embed=discord.Embed(
                 description=f"**{ctx.author.name}** роллит **{min}-{max}**\n"
-                            f"Ваше случайное число: **{rand}** :diamonds:", color=0x00bfff))
+                            f"Ваше случайное число: **{rand}** :diamonds:", color=0x00bfff), delete_after=60)
 
-    @commands.command(
-        name="ролл",
-        aliases=["roll"],
-        breif="Генерация случайного числа от 1 до 100",
-        usage="roll"
-        )
-    async def __roll(self, ctx, min = 1, max = 100 ):
-        await ctx.message.delete()
-        if min <= 0:
-            embed=discord.Embed(description=":x: Введите число больше 0 ", color=0xff0000)
-            await ctx.send(embed=embed, delete_after = 3)
-        elif max > 2147483647:
-            max = 2147483647
-            rand = random.randrange(min, max+1)
-            embed=discord.Embed(description=f"**{ctx.author.name}** роллит ``{min}-{max}``\nВаше случайное число: **{str(rand)}** :diamonds:", color=0x00bfff)
-            await ctx.send(embed=embed, delete_after = 60)
-        elif max < min:
-            await ctx.send(embed= discord.Embed(description = f'{ctx.author} укажите максимальное число больше минимального!', color=0x00bfff))
-        else:
-            rand = random.randrange(min, max+1)
-            embed=discord.Embed(description=f"**{ctx.author.name}** роллит ``{min}-{max}``\nВаше случайное число: **{str(rand)}** :diamonds:", color=0x00bfff)
-            await ctx.send(embed=embed, delete_after = 60)
+    # @commands.command(
+    #     name="ролл",
+    #     aliases=["roll"],
+    #     breif="Генерация случайного числа от 1 до 100",
+    #     usage="roll"
+    #     )
+    # async def __roll(self, ctx, min = 1, max = 100 ):
+    #     await ctx.message.delete()
+    #     if min <= 0:
+    #         embed=discord.Embed(description=":x: Введите число больше 0 ", color=0xff0000)
+    #         await ctx.send(embed=embed, delete_after = 3)
+    #     elif max > 2147483647:
+    #         max = 2147483647
+    #         rand = random.randrange(min, max+1)
+    #         embed=discord.Embed(description=f"**{ctx.author.name}** роллит ``{min}-{max}``\nВаше случайное число: **{str(rand)}** :diamonds:", color=0x00bfff)
+    #         await ctx.send(embed=embed, delete_after = 60)
+    #     elif max < min:
+    #         await ctx.send(embed= discord.Embed(description = f'{ctx.author} укажите максимальное число больше минимального!', color=0x00bfff))
+    #     else:
+    #         rand = random.randrange(min, max+1)
+    #         embed=discord.Embed(description=f"**{ctx.author.name}** роллит ``{min}-{max}``\nВаше случайное число: **{str(rand)}** :diamonds:", color=0x00bfff)
+    #         await ctx.send(embed=embed, delete_after = 60)
 
     @commands.command(aliases = ['flip'], usage = '!flip')
     async def __flip(self, ctx):
