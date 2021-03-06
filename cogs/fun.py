@@ -13,10 +13,31 @@ class fun(commands.Cog):
         self.cursor = self.conn.cursor()
 
     @commands.command(
-        name = "ролл",
-        aliases = ["roll"],
-        breif = "Генерация случайного числа от 1 до 100",
-        usage = "roll"
+        name="ролл",
+        aliases=["rolling"],
+        breif="Генерация случайного числа от 1 до 100",
+        usage="roll"
+        )
+    async def __roll2(self, ctx, *args):
+        await ctx.message.delete()
+        if args is None:
+            rand = random.randint(1, 100)
+            await ctx.send(embed=discord.Embed(
+                description=f"**{ctx.author.name}** роллит **1-100**\n"
+                            f"Ваше случайное число: **{rand}** :diamonds:", color=0x00bfff))
+        else:
+            min = args.split('-')[0]
+            max = args.split('-')[1]
+            rand = random.randint(min, max)
+            await ctx.send(embed=discord.Embed(
+                description=f"**{ctx.author.name}** роллит **{min}-{max}**\n"
+                            f"Ваше случайное число: **{rand}** :diamonds:", color=0x00bfff))
+
+    @commands.command(
+        name="ролл",
+        aliases=["roll"],
+        breif="Генерация случайного числа от 1 до 100",
+        usage="roll"
         )
     async def __roll(self, ctx, min = 1, max = 100 ):
         await ctx.message.delete()
