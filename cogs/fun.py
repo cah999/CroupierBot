@@ -26,8 +26,8 @@ class fun(commands.Cog):
                 description=f"**{ctx.author.name}** роллит **1-100**\n"
                             f"Ваше случайное число: **{rand}** :diamonds:", color=0x00bfff), delete_after=60)
         else:
-            min = arg.split('-')[0]
-            max = arg.split('-')[1]
+            min = int(arg.split('-')[0])
+            max = int(arg.split('-')[1])
             rand = random.randint(min, max)
             await ctx.send(embed=discord.Embed(
                 description=f"**{ctx.author.name}** роллит **{min}-{max}**\n"
