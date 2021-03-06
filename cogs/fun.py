@@ -18,16 +18,16 @@ class fun(commands.Cog):
         breif="Генерация случайного числа от 1 до 100",
         usage="roll"
         )
-    async def __roll(self, ctx, *args):
+    async def __roll(self, ctx, arg):
         await ctx.message.delete()
-        if args is None:
+        if arg is None:
             rand = random.randint(1, 100)
             await ctx.send(embed=discord.Embed(
                 description=f"**{ctx.author.name}** роллит **1-100**\n"
                             f"Ваше случайное число: **{rand}** :diamonds:", color=0x00bfff), delete_after=60)
         else:
-            min = args.split('-')[0]
-            max = args.split('-')[1]
+            min = arg.split('-')[0]
+            max = arg.split('-')[1]
             rand = random.randint(min, max)
             await ctx.send(embed=discord.Embed(
                 description=f"**{ctx.author.name}** роллит **{min}-{max}**\n"
