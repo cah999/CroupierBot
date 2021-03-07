@@ -4,6 +4,8 @@ import random
 import asyncio
 import psycopg2
 import os
+
+
 class fun(commands.Cog):
 
     def __init__(self, client):
@@ -18,55 +20,20 @@ class fun(commands.Cog):
         breif="Генерация случайного числа от 1 до 100",
         usage="roll"
         )
-    async def __roll(self, ctx, arg1=None, arg2=None):
+    async def __roll(self, ctx, arg=None):
         await ctx.message.delete()
-        if (arg1 is None) and (arg2 is None):
+        if arg is None:
             rand = random.randint(1, 100)
             await ctx.send(embed=discord.Embed(
                 description=f"**{ctx.author.name}** роллит **1-100**\n"
                             f"Ваше случайное число: **{rand}** :diamonds:", color=0x00bfff), delete_after=60)
-        elif arg2 is None:
-            min = int(arg1.split('-')[0])
-            max = int(arg1.split('-')[1])
+        else:
+            min = int(arg.split('-')[0])
+            max = int(arg.split('-')[1])
             rand = random.randint(min, max)
             await ctx.send(embed=discord.Embed(
                 description=f"**{ctx.author.name}** роллит **{min}-{max}**\n"
                             f"Ваше случайное число: **{rand}** :diamonds:", color=0x00bfff), delete_after=60)
-        else:
-            print(arg1, arg2)
-            rand = random.randint(arg1, arg2)
-            await ctx.send('qq')
-            await ctx.send(rand)
-            await ctx.send(embed=discord.Embed(
-                description=f'Ваше случайное число {str(rand)}'))
-            await ctx.send(embed=discord.Embed(
-                description=f"**{ctx.author.name}** роллит **{str(arg1)}-{str(arg2)}**\n"
-                            f"Ваше случайное число: **{str(rand)}** :diamonds:", color=0x00bfff), delete_after=60)
-
-
-
-    # @commands.command(
-    #     name="ролл",
-    #     aliases=["roll"],
-    #     breif="Генерация случайного числа от 1 до 100",
-    #     usage="roll"
-    #     )
-    # async def __roll(self, ctx, min = 1, max = 100 ):
-    #     await ctx.message.delete()
-    #     if min <= 0:
-    #         embed=discord.Embed(description=":x: Введите число больше 0 ", color=0xff0000)
-    #         await ctx.send(embed=embed, delete_after = 3)
-    #     elif max > 2147483647:
-    #         max = 2147483647
-    #         rand = random.randrange(min, max+1)
-    #         embed=discord.Embed(description=f"**{ctx.author.name}** роллит ``{min}-{max}``\nВаше случайное число: **{str(rand)}** :diamonds:", color=0x00bfff)
-    #         await ctx.send(embed=embed, delete_after = 60)
-    #     elif max < min:
-    #         await ctx.send(embed= discord.Embed(description = f'{ctx.author} укажите максимальное число больше минимального!', color=0x00bfff))
-    #     else:
-    #         rand = random.randrange(min, max+1)
-    #         embed=discord.Embed(description=f"**{ctx.author.name}** роллит ``{min}-{max}``\nВаше случайное число: **{str(rand)}** :diamonds:", color=0x00bfff)
-    #         await ctx.send(embed=embed, delete_after = 60)
 
     @commands.command(aliases = ['flip'], usage = '!flip')
     async def __flip(self, ctx):
@@ -80,7 +47,6 @@ class fun(commands.Cog):
 
         await ctx.send(embed=embed, delete_after=60)
 
-
     @commands.command(aliases = ['dice'], usage = '!dice')
     async def __dice(self, ctx):
         await ctx.message.delete()
@@ -88,48 +54,29 @@ class fun(commands.Cog):
         embed=discord.Embed(description=f"**{ctx.author.name}** кидает **кубик**\nНа грани: **{str(n)}** :game_die:", color=0xfb00ff)
         await ctx.send(embed=embed, delete_after=60)
 
-
-    @commands.command(aliases=['рулетка'])
-    @commands.cooldown(1, 5, commands.BucketType.user)
-    @commands.has_guild_permissions(manage_messages=True)
-    async def russiablyat(self, ctx):
-        try:
-            channel = ctx.message.author.voice.channel
-        except:
-            return await ctx.send( 'Вы не находитесь в каком либо голосовом канале!' )
-        print(len(channel.members))
-        await ctx.message.delete()
-        while len(channel.members) > 1:
-            message = await ctx.send("``3``")
-            await asyncio.sleep(0.5)
-            await message.edit(content="``2``")
-            await asyncio.sleep(0.5)
-            await message.edit(content="``1``")
-            await asyncio.sleep(0.5)
-            dead = random.choice(channel.members)
-            await message.edit(content=f"бум")
-            await asyncio.sleep(0.5)
-            await dead.move_to(None)
-            await message.edit(content=None, embed=discord.Embed(description=f'{dead.mention} словил пулю... Помянем F'))
-            await asyncio.sleep(2)
-
-    # @commands.command(aliases = ['bunker'])
-    # async def __bunker(self, ctx, payload):
-    #     mess = await ctx.send('Набор в игру')
-    #     payload.emoji = '✅'
-    #     await mess.add_reaction('✅')
-    #     await asyncio.sleep(10)
-    #     mess = await ctx.channel.fetch_message(mess.id)
-    #     if payload.emoji.users := discord.utils.get(mess.reactions, emoji=ctx.guild.get_emoji(471483388532742130)):
-    #         async for user in '✅'.users:
-    #             print(str(user)) 
-    # @commands.command(aliases = ['senda'])
+    # @commands.command(aliases=['рулетка'])
+    # @commands.cooldown(1, 5, commands.BucketType.user)
     # @commands.has_guild_permissions(manage_messages=True)
-    # async def __senda(self, ctx, member:discord.Member = None):
-    #     await ctx.channel.purge (limit = 1)
-    #     embed=discord.Embed(title="Ответы ", description="**Второй** вариант\n\n**1** - ``35``\n**2** - ``yzx``\n**3** - ``2``\n**4** - ``23``\n **5** - ``7``\n**6** - ``165``\n**7** - ``340``\n**8** - ``504``\n**9** - ``1832``\n**10** - ``4``\n**11** - ``150``\n**12** - ``19``\n**13** - ``15``\n**14** - ~~???~~\n**15** - ``820``\n**19** - ``7``\n**20**- ``1619``\n**21** - ``18``", color=0x80ffce)
-    #     embed.set_author(name=member, icon_url=str(member.avatar_url_as(static_format='png', size=2048)))
-    #     await member.send(embed=embed)
+    # async def russiablyat(self, ctx):
+    #     try:
+    #         channel = ctx.message.author.voice.channel
+    #     except:
+    #         return await ctx.send( 'Вы не находитесь в каком либо голосовом канале!' )
+    #     print(len(channel.members))
+    #     await ctx.message.delete()
+    #     while len(channel.members) > 1:
+    #         message = await ctx.send("``3``")
+    #         await asyncio.sleep(0.5)
+    #         await message.edit(content="``2``")
+    #         await asyncio.sleep(0.5)
+    #         await message.edit(content="``1``")
+    #         await asyncio.sleep(0.5)
+    #         dead = random.choice(channel.members)
+    #         await message.edit(content=f"бум")
+    #         await asyncio.sleep(0.5)
+    #         await dead.move_to(None)
+    #         await message.edit(content=None, embed=discord.Embed(description=f'{dead.mention} словил пулю... Помянем F'))
+    #         await asyncio.sleep(2)
 
     @commands.command(aliases = ['chlen', 'hui', 'член'], usage = '!член')
     @commands.cooldown(1, 5, commands.BucketType.user)
@@ -145,7 +92,7 @@ class fun(commands.Cog):
         else:
             await ctx.send(embed = discord.Embed(description = f'**{ctx.author.name}**, твой хуёк не так уж плох...\n**{n}** сантиметров'), delete_after = 10)            
 
-    @commands.command(aliases = ['gay', 'gaymeter', 'гей'], usage = '!гей')
+    @commands.command(aliases = ['gay', 'гей'], usage = '!гей')
     @commands.cooldown(1, 5, commands.BucketType.user)
     async def __gay(self, ctx):
         await ctx.message.delete()
