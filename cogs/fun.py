@@ -20,24 +20,24 @@ class fun(commands.Cog):
         )
     async def __roll(self, ctx, arg1=None, arg2=None):
         await ctx.message.delete()
-        if arg1 is None:
+        if (arg1 is None) and (arg2 is None):
             rand = random.randint(1, 100)
             await ctx.send(embed=discord.Embed(
                 description=f"**{ctx.author.name}** роллит **1-100**\n"
                             f"Ваше случайное число: **{rand}** :diamonds:", color=0x00bfff), delete_after=60)
+        elif arg2 is None:
+            min = int(arg1.split('-')[0])
+            max = int(arg1.split('-')[1])
+            rand = random.randint(min, max)
+            await ctx.send(embed=discord.Embed(
+                description=f"**{ctx.author.name}** роллит **{min}-{max}**\n"
+                            f"Ваше случайное число: **{rand}** :diamonds:", color=0x00bfff), delete_after=60)
         else:
-            if arg2 is None:
-                min = int(arg1.split('-')[0])
-                max = int(arg1.split('-')[1])
-                rand = random.randint(min, max)
-                await ctx.send(embed=discord.Embed(
-                    description=f"**{ctx.author.name}** роллит **{min}-{max}**\n"
-                                f"Ваше случайное число: **{rand}** :diamonds:", color=0x00bfff), delete_after=60)
-            else:
-                rand = random.randint(arg1, arg2)
-                await ctx.send(embed=discord.Embed(
-                    description=f"**{ctx.author.name}** роллит **{str(arg1)}-{str(arg2)}**\n"
-                                f"Ваше случайное число: **{rand}** :diamonds:", color=0x00bfff), delete_after=60)
+            print(arg1, arg2)
+            rand = random.randint(arg1, arg2)
+            await ctx.send(embed=discord.Embed(
+                description=f"**{ctx.author.name}** роллит **{str(arg1)}-{str(arg2)}**\n"
+                            f"Ваше случайное число: **{rand}** :diamonds:", color=0x00bfff), delete_after=60)
 
 
 
