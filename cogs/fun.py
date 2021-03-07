@@ -36,8 +36,10 @@ class fun(commands.Cog):
             print(arg1, arg2)
             rand = random.randint(arg1, arg2)
             await ctx.send(embed=discord.Embed(
+                description=f'Ваше случайное число {str(rand)}'))
+            await ctx.send(embed=discord.Embed(
                 description=f"**{ctx.author.name}** роллит **{str(arg1)}-{str(arg2)}**\n"
-                            f"Ваше случайное число: **{rand}** :diamonds:", color=0x00bfff), delete_after=60)
+                            f"Ваше случайное число: **{str(rand)}** :diamonds:", color=0x00bfff), delete_after=60)
 
 
 
