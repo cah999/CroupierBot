@@ -35,6 +35,8 @@ class fun(commands.Cog):
         else:
             print(arg1, arg2)
             rand = random.randint(arg1, arg2)
+            await ctx.send('qq')
+            await ctx.send(rand)
             await ctx.send(embed=discord.Embed(
                 description=f'Ваше случайное число {str(rand)}'))
             await ctx.send(embed=discord.Embed(
