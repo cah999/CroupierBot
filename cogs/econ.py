@@ -85,7 +85,7 @@ class Economic(commands.Cog):
             self.conn.commit()
             self.cursor.execute("SELECT lvl FROM users WHERE id = {}".format(user.id))
             lvl = self.cursor.fetchone()[0]
-            await user.send(embed = discord.Embed (description = f'Поздравляю! Ты получил **{lvl}** уровень!\nТвоя награда: **{lvl*100} :tickets: **', color=0xfbff00), delete_after=60*10)
+            await user.send(embed = discord.Embed (description = f'Поздравляю! Ты получил **{lvl}** уровень!\nТвоя награда: **{lvl*100} :tickets: **', color=0xfbff00))
             if lvl == 10:
                 embed=discord.Embed(title="Ты получил новое достижение!🥳", description="**⭐️Мама, кажется, я расту!⭐️**", color=0x66fcff)
                 await user.send(embed=embed)
@@ -177,7 +177,7 @@ class Economic(commands.Cog):
                         self.conn.commit()
                         self.cursor.execute("SELECT lvl FROM users WHERE id = {}".format(member.id))
                         lvl = self.cursor.fetchone()[0]
-                        await member.send(embed = discord.Embed (description = f'Поздравляю! Ты получил **{lvl}** уровень!\nТвоя награда: **{lvl*100} :tickets: **', color=0xfbff00), delete_after=60*10)
+                        await member.send(embed = discord.Embed (description = f'Поздравляю! Ты получил **{lvl}** уровень!\nТвоя награда: **{lvl*100} :tickets: **', color=0xfbff00))
                         if lvl == 10:
                             embed=discord.Embed(title="Ты получил новое достижение!🥳", description="**⭐️Мама, кажется, я расту!⭐️**", color=0x66fcff)
                             await member.send(embed=embed)

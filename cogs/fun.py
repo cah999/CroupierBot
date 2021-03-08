@@ -41,13 +41,17 @@ class fun(commands.Cog):
         n = random.randint(0, 1)
         result = 'Орёл' if n == 1 else 'Решка'
         if result == 'Орёл':
-            embed=discord.Embed(description=f"**{ctx.author.name}** подбрасывает **монетку**\nВам выпал: **{result}** :new_moon:", color=0xd7fe90)
+            embed = discord.Embed(
+                description=f"**{ctx.author.name}** подбрасывает **монетку**\n"
+                            f"Вам выпал: **{result}** :new_moon:", color=0xd7fe90)
         else:
-            embed=discord.Embed(description=f"**{ctx.author.name}** подбрасывает **монетку**\nВам выпала: **{result}** :full_moon:", color=0xd7fe90)
+            embed = discord.Embed(
+                description=f"**{ctx.author.name}** подбрасывает **монетку**\n"
+                            f"Вам выпала: **{result}** :full_moon:", color=0xd7fe90)
 
         await ctx.send(embed=embed, delete_after=60)
 
-    @commands.command(aliases = ['dice'], usage = '!dice')
+    @commands.command(aliases=['dice'], usage='!dice')
     async def __dice(self, ctx):
         await ctx.message.delete()
         n = random.randrange(1, 7)
@@ -287,7 +291,7 @@ class fun(commands.Cog):
         channel = self.client.get_channel(796005631865782273)
         if member != self.client.user:
             if str(payload.emoji) == '🔴':
-                await channel.send(embed = discord.Embed(description = f'**{member.name}** нажал на красную кнопку!'), delete_after = 5)
+                await channel.send(embed=discord.Embed(description = f'**{member.name}** нажал на красную кнопку!'), delete_after = 5)
 
         # elif member.id == 312795489743405058:
         #     return
