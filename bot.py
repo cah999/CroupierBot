@@ -4,6 +4,7 @@ from discord.ext import commands
 import psycopg2
 
 DATABASE_URL = os.environ['DATABASE_URL']
+TOKEN = os.environ['TOKEN']
 conn = psycopg2.connect(DATABASE_URL, sslmode = 'require')
 cursor = conn.cursor()
 client = commands.Bot(command_prefix="!", intents = discord.Intents(messages = True, guild_messages = True, members = True, guilds = True, reactions = True, voice_states = True, invites = True))
@@ -127,4 +128,4 @@ for filename in os.listdir('./cogs'):
     if filename.endswith('.py'):
         client.load_extension(f'cogs.{filename[:-3]}')
 # conn.close()
-client.run('NzU1MDIzNTcwMzU4MzcwMzA1.X19Qfg.XVFpGANs1YSKh4LCrNQhX27fHVw')
+client.run(TOKEN)
