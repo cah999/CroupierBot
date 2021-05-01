@@ -133,14 +133,13 @@ class mod(commands.Cog):
     async def on_member_join(self, member):
         role = discord.utils.get(member.guild.roles, name="Участник")
         await member.add_roles(role)
-        
+
     @commands.Cog.listener()
     async def on_member_update(self, before, after):
-        if before.role != after.role:
-            if after.member.id == 483866841148686337:
-                new_role = after.role
-                if new_role.id in [774285935240151050, 774285953350369291]:
-                    after.member.remove(new_role)
+        if after.member.id == 483866841148686337:
+            new_role = after.role
+            if new_role.id in [774285935240151050, 774285953350369291]:
+                after.member.remove(new_role)
 
     # # Invite Create
     # @commands.Cog.listener()
