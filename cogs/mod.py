@@ -137,9 +137,10 @@ class mod(commands.Cog):
     @commands.Cog.listener()
     async def on_member_update(self, before, after):
         if after.id == 483866841148686337:
-            new_role = after.role
-            if new_role.id in [774285935240151050, 774285953350369291]:
-                after.member.remove(new_role)
+            if before.roles != after.roles:
+                for role in after.roles:
+                    if role.id in [774285935240151050, 774285953350369291]:
+                        await after.remove_roles(role, reason='Заработай ты нормально на эту ебаную роль')
 
     # # Invite Create
     # @commands.Cog.listener()
