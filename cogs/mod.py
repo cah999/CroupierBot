@@ -134,13 +134,13 @@ class mod(commands.Cog):
         role = discord.utils.get(member.guild.roles, name="Участник")
         await member.add_roles(role)
 
-    @commands.Cog.listener()
-    async def on_member_update(self, before, after):
-        if after.id == 483866841148686337:
-            if before.roles != after.roles:
-                for role in after.roles:
-                    if role.id in [774285935240151050, 774285953350369291]:
-                        await after.remove_roles(role, reason='Заработай ты нормально на эту ебаную роль')
+#    @commands.Cog.listener()
+#    async def on_member_update(self, before, after):
+#        if after.id == 483866841148686337:
+#            if before.roles != after.roles:
+#                for role in after.roles:
+#                    if role.id in [774285935240151050, 774285953350369291]:
+#                        await after.remove_roles(role, reason='Заработай ты нормально на эту ебаную роль')
 
     # # Invite Create
     # @commands.Cog.listener()
