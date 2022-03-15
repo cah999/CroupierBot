@@ -1,9 +1,10 @@
-import discord
-from discord.ext import commands
+import os
 from collections import defaultdict
 from datetime import datetime
+
+import discord
 import psycopg2
-import os
+from discord.ext import commands
 
 
 class InviteTracker(commands.Cog, name='Invites'):
@@ -12,7 +13,7 @@ class InviteTracker(commands.Cog, name='Invites'):
         self.cached_invites = defaultdict(lambda: defaultdict(int))
         client.loop.create_task(self.get_guild_invites())
         DATABASE_URL = os.environ['DATABASE_URL']
-        self.conn = psycopg2.connect(DATABASE_URL, sslmode = 'require')
+        self.conn = psycopg2.connect(DATABASE_URL, sslmode='require')
         self.cursor = self.conn.cursor()
 
     async def get_guild_invites(self):
@@ -27,7 +28,6 @@ class InviteTracker(commands.Cog, name='Invites'):
             if not invites:
                 continue
             self.cached_invites[guild.id] = defaultdict(int, {invite.code: invite.uses for invite in invites})
-
 
     @commands.Cog.listener()
     async def on_invite_create(self, invite: discord.Invite):
@@ -53,18 +53,19 @@ class InviteTracker(commands.Cog, name='Invites'):
             inviter = invite.inviter
             self.cached_invites[member.guild.id][invite.code] = invite.uses
         if inviter is None:
-            e = discord.Embed(description = 'К нам присоединился новый участник! ',
+            e = discord.Embed(description='К нам присоединился новый участник! ',
                               color=discord.Colour.dark_purple(),
                               timestamp=datetime.utcnow())
             e.set_author(icon_url=member.avatar_url, name=member)
             await invite_channel.send(embed=e)
-            return 
+            return
         self.cursor.execute("UPDATE users SET invites = invites + {} WHERE id = {}".format(1, inviter.id))
         self.conn.commit()
         self.cursor.execute("SELECT invites FROM users WHERE id = {}".format(inviter.id))
         a = self.cursor.fetchone()[0]
         if a == 10:
-            embed=discord.Embed(title="Ты получил новое достижение!🥳", description="**🎆Общительный🎆**", color=0x66fcff)
+            embed = discord.Embed(title="Ты получил новое достижение!🥳", description="**🎆Общительный🎆**",
+                                  color=0x66fcff)
             embed.add_field(name="Твоя награда", value="**2000 :tickets:**", inline=False)
             embed.set_footer(text="Следующее достижение: 25 друзей")
             await inviter.send(embed=embed)
@@ -73,18 +74,19 @@ class InviteTracker(commands.Cog, name='Invites'):
             self.conn.commit()
 
         elif a == 25:
-            embed=discord.Embed(title="Ты получил новое достижение!🥳", description="**🎇Душа компании🎇**", color=0x66fcff)
+            embed = discord.Embed(title="Ты получил новое достижение!🥳", description="**🎇Душа компании🎇**",
+                                  color=0x66fcff)
             embed.add_field(name="Твоя награда", value="**4000 :tickets:**", inline=False)
             embed.set_footer(text="Следующее достижение: 50 друзей")
-            await inviter.send(embed=embed)        
-            self.cursor.execute("UPDATE users SET balance = balance + {} WHERE id = {}".format(4000, inviter.id))   
+            await inviter.send(embed=embed)
+            self.cursor.execute("UPDATE users SET balance = balance + {} WHERE id = {}".format(4000, inviter.id))
             self.cursor.execute("UPDATE users SET achivements = achivements + {} WHERE id = {}".format(1, inviter.id))
             self.conn.commit()
 
         elif a == 50:
-            embed=discord.Embed(title="Ты получил новое достижение!🥳", description="**Альфач😎**", color=0x66fcff)
+            embed = discord.Embed(title="Ты получил новое достижение!🥳", description="**Альфач😎**", color=0x66fcff)
             embed.add_field(name="Твоя награда", value="**7500 :tickets:**", inline=False)
-            await inviter.send(embed=embed)            
+            await inviter.send(embed=embed)
             self.cursor.execute("UPDATE users SET balance = balance + {} WHERE id = {}".format(7500, inviter.id))
             self.cursor.execute("UPDATE users SET achivements = achivements + {} WHERE id = {}".format(1, inviter.id))
             self.conn.commit()
@@ -93,9 +95,12 @@ class InviteTracker(commands.Cog, name='Invites'):
             if b == 27:
                 role = discord.utils.get(inviter.guild.roles, name="👑Склоните колено👑")
                 await inviter.add_roles(role)
-                embed=discord.Embed(title="Ты получил ПОСЛЕДНЕЕ достижение!🥳", description="**🏆ЛЕГЕНДА🏆**", color=0x66fcff)
-                embed.add_field(name="Твоя награда", value="**10000 :tickets:**\nА также эксклюзивная роль ``👑Склоните колено👑``", inline=False)
-                self.cursor.execute("UPDATE users SET balance = balance + {} WHERE id = {}".format(10000, inviter.id))   
+                embed = discord.Embed(title="Ты получил ПОСЛЕДНЕЕ достижение!🥳", description="**🏆ЛЕГЕНДА🏆**",
+                                      color=0x66fcff)
+                embed.add_field(name="Твоя награда",
+                                value="**10000 :tickets:**\nА также эксклюзивная роль ``👑Склоните колено👑``",
+                                inline=False)
+                self.cursor.execute("UPDATE users SET balance = balance + {} WHERE id = {}".format(10000, inviter.id))
                 self.conn.commit()
 
                 await inviter.send(embed=embed)
@@ -104,7 +109,6 @@ class InviteTracker(commands.Cog, name='Invites'):
                               color=discord.Colour.dark_purple(),
                               timestamp=datetime.utcnow())
             e.set_author(icon_url=member.avatar_url, name=member)
-            
 
             e.add_field(name='Приласил:', value=f'{inviter.mention} (Количество приглашений: {a})')
             await invite_channel.send(embed=e)
