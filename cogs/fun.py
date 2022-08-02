@@ -188,16 +188,25 @@ class fun(commands.Cog):
             description=f'**{member1.name}** - {roles[0]}\n**{member2.name}** - {roles[1]}\n**{member3.name}** - {roles[2]}\n**{member4.name}** - {roles[3]}\n**{member5.name}** - {roles[4]}'),
             delete_after=15)
 
-    @commands.command(aliases=['set_songs'])
-    async def __set_songs(self, ctx):
+    @commands.command(aliases=['update_songs'])
+    async def __update_songs(self, ctx):
         await ctx.message.delete()
         with open('resources/songs.txt') as file:
             self.songs_list = file.read().splitlines()
         await ctx.send(embed=discord.Embed(description='Список песен успешно обновлён!'), delete_after=15)
 
-    @commands.command(aliases=['clear_songs'])
-    async def __set_songs(self, ctx):
+    @commands.command(aliases=['add_songs'])
+    async def __add_songs(self, ctx, *, text: str):
         await ctx.message.delete()
+        with open('resources/songs.txt', 'a') as file:
+            file.write(text + '\n')
+        await ctx.send(embed=discord.Embed(description='Список песен успешно обновлён!'), delete_after=15)
+
+    @commands.command(aliases=['clear_songs'])
+    async def __clear_songs(self, ctx):
+        await ctx.message.delete()
+        with open('resources/songs.txt', 'w') as file:
+            file.write('')
         self.songs_list = None
         await ctx.send(embed=discord.Embed(description='Список песен успешно обновлён!'), delete_after=15)
 
@@ -232,7 +241,7 @@ class fun(commands.Cog):
                 await message.edit(embed=embed)
                 await asyncio.sleep(5)
             text = '**'
-            for i in range(len(end)-1):
+            for i in range(len(end) - 1):
                 text += f'\n\n{end[i]} и {end[i + 1]}'
             text += '**'
             emb = discord.Embed(title=f'Песни участников', description=text, color=0x32aafd,
