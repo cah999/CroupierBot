@@ -191,7 +191,14 @@ class fun(commands.Cog):
     @commands.command(aliases=['set_songs'])
     async def __set_songs(self, ctx):
         await ctx.message.delete()
-        self.songs_list = ctx.message.splitlines()
+        with open('resources/songs.txt') as file:
+            self.songs_list = file.read().splitlines()
+        await ctx.send(embed=discord.Embed(description='Список песен успешно обновлён!'), delete_after=15)
+
+    @commands.command(aliases=['clear_songs'])
+    async def __set_songs(self, ctx):
+        await ctx.message.delete()
+        self.songs_list = None
         await ctx.send(embed=discord.Embed(description='Список песен успешно обновлён!'), delete_after=15)
 
     @commands.command(aliases=['rsongs'], usage='!rsongs')
