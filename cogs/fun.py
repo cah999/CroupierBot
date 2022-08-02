@@ -220,7 +220,10 @@ class fun(commands.Cog):
         #     await ctx.send(embed=discord.Embed(description='Вы не указали список песен!'), delete_after=15)
         #     return
         # songs = self.songs_list
-        songs = ['ЛСП & PHARAOH - амнезия', "ЛСП & M'Dee - Весновка-ушача", 'Серёга Пират - Почему ты ещё не фанат', 'Валентин Стрыкало - Фанк', 'SLAVA MARLOW - По глазам', 'Gone.Fludd - сети', 'Бамбл бизи дайджест', 'максим знаешь ли ты вдоль ночных дорог', 'сплин-три пути', 'Анимация- родина', 'Три дня дождя - перезаряжай', 'MACAN- за всех']
+        songs = ['ЛСП & PHARAOH - амнезия', "ЛСП & M'Dee - Весновка-ушача", 'Серёга Пират - Почему ты ещё не фанат',
+                 'Валентин Стрыкало - Фанк', 'SLAVA MARLOW - По глазам', 'Gone.Fludd - сети', 'Бамбл бизи дайджест',
+                 'максим знаешь ли ты вдоль ночных дорог', 'сплин-три пути', 'Анимация- родина',
+                 'Три дня дождя - перезаряжай', 'MACAN- за всех']
         end = []
         random.shuffle(songs)
         try:
@@ -235,37 +238,45 @@ class fun(commands.Cog):
             #                    delete_after=15)
             #     return
             message = await ctx.send(embed=discord.Embed(description='Начинаю распределять песни...'))
-            for i in range(n):
-                embed = discord.Embed(description=f'**{member[i].mention}** - {songs[i]} и {songs[i + 1]}')
-                end.append(f"\n\n{member[i].mention}: {songs[i]} и {songs[i + 1]} ")
+            # for i in range(n):
+            #     embed = discord.Embed(description=f'**{member[i].mention}** - {songs[i]} и {songs[i + 1]}')
+            #     end.append(f"\n\n{member[i].mention}: {songs[i]} и {songs[i + 1]} ")
+            #     await message.edit(embed=embed)
+            #     await asyncio.sleep(5)
+            for i in range(1, n + 1):
+                song1 = random.choice(songs)
+                songs.remove(song1)
+                song2 = random.choice(songs)
+                songs.remove(song2)
+                embed = discord.Embed(description=f'**{member[i - 1].mention}** - {song1} и {song2}',
+                                      color=0x6b9fff)
+                end.append(f"{member[i - 1].name} | {song1} и {song2} ")
                 await message.edit(embed=embed)
                 await asyncio.sleep(5)
-            text = '**'
-            for i in range(len(end) - 1):
-                text += f'\n\n{end[i]} и {end[i + 1]}'
-            text += '**'
-            emb = discord.Embed(title=f'Песни участников', description=text,
-                                timestamp=ctx.message.created_at)
-            await message.edit(embed=emb)
-            # if n == 1:
-            #     emb = discord.Embed(description=f"**{end[0]}**", color=0x32aafd, timestamp=ctx.message.created_at)
-            #     await message.edit(embed=emb)
-            # elif n == 2:
-            #     emb = discord.Embed(description=f"**{end[0]}\n\n{end[1]}**", color=0x32aafd,
-            #                         timestamp=ctx.message.created_at)
-            #     await message.edit(embed=emb)
-            # elif n == 3:
-            #     emb = discord.Embed(description=f"**{end[0]}\n\n{end[1]}\n\n{end[2]}**", color=0x32aafd,
-            #                         timestamp=ctx.message.created_at)
-            #     await message.edit(embed=emb)
-            # elif n == 4:
-            #     emb = discord.Embed(description=f"**{end[0]}\n\n{end[1]}\n\n{end[2]}\n\n{end[3]}**", color=0x32aafd,
-            #                         timestamp=ctx.message.created_at)
-            #     await message.edit(embed=emb)
-            # elif n == 5:
-            #     emb = discord.Embed(description=f"**{end[0]}\n\n{end[1]}\n\n{end[2]}\n\n{end[3]}\n\n{end[4]}**",
-            #                         color=0x32aafd, timestamp=ctx.message.created_at)
-            #     await message.edit(embed=emb)
+            if n == 1:
+                emb = discord.Embed(description=f"**{end[0]}**", color=0x32aafd, timestamp=ctx.message.created_at)
+                await message.edit(embed=emb)
+            elif n == 2:
+                emb = discord.Embed(description=f"**{end[0]}\n\n{end[1]}**", color=0x32aafd,
+                                    timestamp=ctx.message.created_at)
+                await message.edit(embed=emb)
+            elif n == 3:
+                emb = discord.Embed(description=f"**{end[0]}\n\n{end[1]}\n\n{end[2]}**", color=0x32aafd,
+                                    timestamp=ctx.message.created_at)
+                await message.edit(embed=emb)
+            elif n == 4:
+                emb = discord.Embed(description=f"**{end[0]}\n\n{end[1]}\n\n{end[2]}\n\n{end[3]}**", color=0x32aafd,
+                                    timestamp=ctx.message.created_at)
+                await message.edit(embed=emb)
+            elif n == 5:
+                emb = discord.Embed(description=f"**{end[0]}\n\n{end[1]}\n\n{end[2]}\n\n{end[3]}\n\n{end[4]}**",
+                                    color=0x32aafd, timestamp=ctx.message.created_at)
+                await message.edit(embed=emb)
+            elif n == 6:
+                emb = discord.Embed(
+                    description=f"**{end[0]}\n\n{end[1]}\n\n{end[2]}\n\n{end[3]}\n\n{end[4]}\n\n{end[5]}**",
+                    color=0x32aafd, timestamp=ctx.message.created_at)
+                await message.edit(embed=emb)
 
     @commands.command(aliases=['rdota'], usage='!rdota')
     @commands.cooldown(1, 15, commands.BucketType.user)
