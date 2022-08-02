@@ -188,27 +188,27 @@ class fun(commands.Cog):
             description=f'**{member1.name}** - {roles[0]}\n**{member2.name}** - {roles[1]}\n**{member3.name}** - {roles[2]}\n**{member4.name}** - {roles[3]}\n**{member5.name}** - {roles[4]}'),
             delete_after=15)
 
-    @commands.command(aliases=['update_songs'])
-    async def __update_songs(self, ctx):
-        await ctx.message.delete()
-        with open('resources/songs.txt') as file:
-            self.songs_list = file.read().splitlines()
-        await ctx.send(embed=discord.Embed(description='Список песен успешно обновлён!'), delete_after=15)
-
-    @commands.command(aliases=['add_songs'])
-    async def __add_songs(self, ctx, *, text: str):
-        await ctx.message.delete()
-        with open('resources/songs.txt', 'a') as file:
-            file.write(text + '\n')
-        await ctx.send(embed=discord.Embed(description='Список песен успешно обновлён!'), delete_after=15)
-
-    @commands.command(aliases=['clear_songs'])
-    async def __clear_songs(self, ctx):
-        await ctx.message.delete()
-        with open('resources/songs.txt', 'w') as file:
-            file.write('')
-        self.songs_list = None
-        await ctx.send(embed=discord.Embed(description='Список песен успешно обновлён!'), delete_after=15)
+    # @commands.command(aliases=['update_songs'])
+    # async def __update_songs(self, ctx):
+    #     await ctx.message.delete()
+    #     with open('resources/songs.txt') as file:
+    #         self.songs_list = file.read().splitlines()
+    #     await ctx.send(embed=discord.Embed(description='Список песен успешно обновлён!'), delete_after=15)
+    #
+    # @commands.command(aliases=['add_songs'])
+    # async def __add_songs(self, ctx, *, text: str):
+    #     await ctx.message.delete()
+    #     with open('resources/songs.txt', 'a') as file:
+    #         file.write(text + '\n')
+    #     await ctx.send(embed=discord.Embed(description='Список песен успешно обновлён!'), delete_after=15)
+    #
+    # @commands.command(aliases=['clear_songs'])
+    # async def __clear_songs(self, ctx):
+    #     await ctx.message.delete()
+    #     with open('resources/songs.txt', 'w') as file:
+    #         file.write('')
+    #     self.songs_list = None
+    #     await ctx.send(embed=discord.Embed(description='Список песен успешно обновлён!'), delete_after=15)
 
     @commands.command(aliases=['rsongs'], usage='!rsongs')
     @commands.cooldown(1, 15, commands.BucketType.user)
@@ -216,10 +216,11 @@ class fun(commands.Cog):
         await ctx.message.delete()
         colors = ['0x28bd93', '0x6b9fff', '0xff0073', '0x8e27aa', '0x12678c', '0x75f5d5', '0x52ff8e', '0xfcfcfc',
                   '0x0b8e0f', '0xe2ff9e', '0xffb029', '0xc67e76', '0x6b7cff', '0xfbff00', '0x44ff00']
-        if not self.songs_list:
-            await ctx.send(embed=discord.Embed(description='Вы не указали список песен!'), delete_after=15)
-            return
-        songs = self.songs_list
+        # if not self.songs_list:
+        #     await ctx.send(embed=discord.Embed(description='Вы не указали список песен!'), delete_after=15)
+        #     return
+        # songs = self.songs_list
+        songs = ['ЛСП & PHARAOH - амнезия', "ЛСП & M'Dee - Весновка-ушача", 'Серёга Пират - Почему ты ещё не фанат', 'Валентин Стрыкало - Фанк', 'SLAVA MARLOW - По глазам', 'Gone.Fludd - сети', 'Бамбл бизи дайджест', 'максим знаешь ли ты вдоль ночных дорог', 'сплин-три пути', 'Анимация- родина', 'Три дня дождя - перезаряжай', 'MACAN- за всех']
         end = []
         random.shuffle(songs)
         try:
@@ -229,10 +230,10 @@ class fun(commands.Cog):
         else:
             member = channel.members
             n = len(channel.members)
-            if len(self.songs_list) != n * 2:
-                await ctx.send(embed=discord.Embed(description='Кажется, не все песни участников загружены в список'),
-                               delete_after=15)
-                return
+            # if len(self.songs_list) != n * 2:
+            #     await ctx.send(embed=discord.Embed(description='Кажется, не все песни участников загружены в список'),
+            #                    delete_after=15)
+            #     return
             message = await ctx.send(embed=discord.Embed(description='Начинаю распределять песни...'))
             for i in range(n):
                 embed = discord.Embed(description=f'**{member[i].mention}** - {songs[i]} и {songs[i + 1]}',
