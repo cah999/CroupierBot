@@ -236,8 +236,7 @@ class fun(commands.Cog):
             #     return
             message = await ctx.send(embed=discord.Embed(description='Начинаю распределять песни...'))
             for i in range(n):
-                embed = discord.Embed(description=f'**{member[i].mention}** - {songs[i]} и {songs[i + 1]}',
-                                      color='0xffb029')
+                embed = discord.Embed(description=f'**{member[i].mention}** - {songs[i]} и {songs[i + 1]}')
                 end.append(f"\n\n{member[i].mention}: {songs[i]} и {songs[i + 1]} ")
                 await message.edit(embed=embed)
                 await asyncio.sleep(5)
@@ -245,7 +244,7 @@ class fun(commands.Cog):
             for i in range(len(end) - 1):
                 text += f'\n\n{end[i]} и {end[i + 1]}'
             text += '**'
-            emb = discord.Embed(title=f'Песни участников', description=text, color=0x32aafd,
+            emb = discord.Embed(title=f'Песни участников', description=text,
                                 timestamp=ctx.message.created_at)
             await message.edit(embed=emb)
             # if n == 1:
