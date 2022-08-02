@@ -237,7 +237,7 @@ class fun(commands.Cog):
             message = await ctx.send(embed=discord.Embed(description='Начинаю распределять песни...'))
             for i in range(n):
                 embed = discord.Embed(description=f'**{member[i].mention}** - {songs[i]} и {songs[i + 1]}',
-                                      color=random.choice(colors))
+                                      color='0xffb029')
                 end.append(f"\n\n{member[i].mention}: {songs[i]} и {songs[i + 1]} ")
                 await message.edit(embed=embed)
                 await asyncio.sleep(5)
