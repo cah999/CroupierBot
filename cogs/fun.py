@@ -14,6 +14,7 @@ class fun(commands.Cog):
         DATABASE_URL = os.environ['DATABASE_URL']
         self.conn = psycopg2.connect(DATABASE_URL, sslmode='require')
         self.cursor = self.conn.cursor()
+        self.songs_list = None
 
     @commands.command(
         name="ролл",
@@ -99,11 +100,11 @@ class fun(commands.Cog):
         elif n == 1 or n == -1:
             await ctx.send(embed=discord.Embed(
                 description=f'**{ctx.author.name}**, да уж, как ты с такой валыной живёшь...\n**{n}** сантиметр'),
-                           delete_after=10)
+                delete_after=10)
         else:
             await ctx.send(embed=discord.Embed(
                 description=f'**{ctx.author.name}**, твой хуёк не так уж плох...\n**{n}** сантиметров'),
-                           delete_after=10)
+                delete_after=10)
 
     @commands.command(aliases=['gay', 'гей'], usage='!гей')
     @commands.cooldown(1, 5, commands.BucketType.user)
@@ -140,7 +141,7 @@ class fun(commands.Cog):
         if n <= 30:
             await ctx.send(embed=discord.Embed(
                 description=f'**{ctx.author.name}**, ну немного конечно есть, но можешь считать себя не геем...\nТы гей на **{n}%**'),
-                           delete_after=10)
+                delete_after=10)
         elif n > 30 and n < 50:
             await ctx.send(
                 embed=discord.Embed(description=f'**{ctx.author.name}**, ладно, ещё сойдёт...\n Ты гей на **{n} %**'),
@@ -151,7 +152,7 @@ class fun(commands.Cog):
         else:
             await ctx.send(embed=discord.Embed(
                 description=f'**{ctx.author.name}**, АХАХАХАХАХАХАХАХ. Соболезную.\nТы гей на **{n} %**'),
-                           delete_after=10)
+                delete_after=10)
             embed = discord.Embed(title="Ты получил новое достижение!🥳",
                                   description="**🌈Welcome to the club, buddy🌈**", color=0x66fcff)
             embed.add_field(name="Твоя награда", value="**500 :tickets:**", inline=False)
@@ -185,7 +186,70 @@ class fun(commands.Cog):
         random.shuffle(roles)
         await ctx.send(embed=discord.Embed(
             description=f'**{member1.name}** - {roles[0]}\n**{member2.name}** - {roles[1]}\n**{member3.name}** - {roles[2]}\n**{member4.name}** - {roles[3]}\n**{member5.name}** - {roles[4]}'),
-                       delete_after=15)
+            delete_after=15)
+
+    @commands.command(aliases=['set_songs'])
+    async def __set_songs(self, ctx):
+        await ctx.message.delete()
+        self.songs_list = ctx.message.splitlines()
+        await ctx.send(embed=discord.Embed(description='Список песен успешно обновлён!'), delete_after=15)
+
+    @commands.command(aliases=['rsongs'], usage='!rsongs')
+    @commands.cooldown(1, 15, commands.BucketType.user)
+    async def __random_songs(self, ctx):
+        await ctx.message.delete()
+        colors = ['0x28bd93', '0x6b9fff', '0xff0073', '0x8e27aa', '0x12678c', '0x75f5d5', '0x52ff8e', '0xfcfcfc',
+                  '0x0b8e0f', '0xe2ff9e', '0xffb029', '0xc67e76', '0x6b7cff', '0xfbff00', '0x44ff00']
+        if not self.songs_list:
+            await ctx.send(embed=discord.Embed(description='Вы не указали список песен!'), delete_after=15)
+            return
+        songs = self.songs_list
+        end = []
+        random.shuffle(songs)
+        try:
+            channel = ctx.message.author.voice.channel
+        except:
+            return await ctx.send('Вы не находитесь в каком либо голосовом канале!', delete_after=5)
+        else:
+            member = channel.members
+            n = len(channel.members)
+            if len(self.songs_list) != n * 2:
+                await ctx.send(embed=discord.Embed(description='Кажется, не все песни участников загружены в список'),
+                               delete_after=15)
+                return
+            message = await ctx.send(embed=discord.Embed(description='Начинаю распределять песни...'))
+            for i in range(n):
+                embed = discord.Embed(description=f'**{member[i].mention}** - {songs[i]} и {songs[i + 1]}',
+                                      color=random.choice(colors))
+                end.append(f"\n\n{member[i].mention}: {songs[i]} и {songs[i + 1]} ")
+                await message.edit(embed=embed)
+                await asyncio.sleep(5)
+            text = '**'
+            for i in range(len(end)-1):
+                text += f'\n\n{end[i]} и {end[i + 1]}'
+            text += '**'
+            emb = discord.Embed(title=f'Песни участников', description=text, color=0x32aafd,
+                                timestamp=ctx.message.created_at)
+            await message.edit(embed=emb)
+            # if n == 1:
+            #     emb = discord.Embed(description=f"**{end[0]}**", color=0x32aafd, timestamp=ctx.message.created_at)
+            #     await message.edit(embed=emb)
+            # elif n == 2:
+            #     emb = discord.Embed(description=f"**{end[0]}\n\n{end[1]}**", color=0x32aafd,
+            #                         timestamp=ctx.message.created_at)
+            #     await message.edit(embed=emb)
+            # elif n == 3:
+            #     emb = discord.Embed(description=f"**{end[0]}\n\n{end[1]}\n\n{end[2]}**", color=0x32aafd,
+            #                         timestamp=ctx.message.created_at)
+            #     await message.edit(embed=emb)
+            # elif n == 4:
+            #     emb = discord.Embed(description=f"**{end[0]}\n\n{end[1]}\n\n{end[2]}\n\n{end[3]}**", color=0x32aafd,
+            #                         timestamp=ctx.message.created_at)
+            #     await message.edit(embed=emb)
+            # elif n == 5:
+            #     emb = discord.Embed(description=f"**{end[0]}\n\n{end[1]}\n\n{end[2]}\n\n{end[3]}\n\n{end[4]}**",
+            #                         color=0x32aafd, timestamp=ctx.message.created_at)
+            #     await message.edit(embed=emb)
 
     @commands.command(aliases=['rdota'], usage='!rdota')
     @commands.cooldown(1, 15, commands.BucketType.user)
@@ -281,7 +345,7 @@ class fun(commands.Cog):
         elif n >= 100 and n < 199:
             await ctx.send(embed=discord.Embed(
                 description=f'**{ctx.author.name}**, мои поздравления, ты реально умён, бро!\nТвой iq: **{n}**'),
-                           delete_after=10)
+                delete_after=10)
         else:
             await ctx.send(embed=discord.Embed(description=f'**{ctx.author.name}**, СВЕРХЧЕЛОВЕК!\nТвой iq: **{n}**'),
                            delete_after=10)

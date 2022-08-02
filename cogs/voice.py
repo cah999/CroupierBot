@@ -11,6 +11,7 @@ class Voice(commands.Cog):
     def __init__(self, client):
         self.client = client
         self.new_msg = False
+        self.vc = None
 
     @staticmethod
     async def create_voice(text, lang='ru'):
@@ -29,23 +30,32 @@ class Voice(commands.Cog):
                 if member == ctx.author:
                     voice_channel = v
                     break
+        else:
+            ch = self.client.get_guild(815911512858034226)
+            for v in ch.voice_channels:
+                for member in v.members:
+                    if member == ctx.author:
+                        voice_channel = v
+                        break
         if voice_channel:
             await self.create_voice(text)
-            vc = await voice_channel.connect()
+            if not self.vc:
+                self.vc = await voice_channel.connect()
             print(f'[+] Joined {voice_channel.name}')
             # vc.play(
             #     discord.FFmpegPCMAudio(executable='ffmpeg/bin/ffmpeg.exe', source='voice.mp3',
             #                            options='-loglevel panic'))
-            vc.play(
+            self.vc.play(
                 discord.FFmpegPCMAudio(source='voice.mp3',
                                        options='-loglevel panic'))
             print('[+] Сообщение озвучено!')
             self.new_msg = False
             while len(voice_channel.members) > 1:
                 await asyncio.sleep(1)
-                if self.new_msg:
-                    return
-            await vc.disconnect()
+                # if self.new_msg:
+                #     return
+            await self.vc.disconnect()
+            self.vc = None
             print(f'[+] Leaved {voice_channel.name}')
         else:
             print('[+] Юзер не находится в каком-либо канале')
