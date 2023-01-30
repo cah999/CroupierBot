@@ -31,7 +31,8 @@ class Voice(commands.Cog):
                     voice_channel = v
                     break
         else:
-            ch = self.client.get_guild(815911512858034226)
+            # 815911512858034226
+            ch = self.client.get_guild(1044668113729355856)
             for v in ch.voice_channels:
                 for member in v.members:
                     if member == ctx.author:
